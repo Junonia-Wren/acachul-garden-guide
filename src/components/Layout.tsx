@@ -17,7 +17,7 @@ export const Layout = ({ isAuthenticated = false, onLogout }: LayoutProps) => {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
               <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold text-foreground">PlantCare Pro</span>
+              <span className="text-xl font-bold text-foreground">Yol ná</span>
             </Link>
 
             <nav className="flex items-center space-x-4">

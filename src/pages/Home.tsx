@@ -96,7 +96,7 @@ export const Home = () => {
             ¿Listo para mejorar el cuidado de tus plantas?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Únete a PlantCare Pro y transforma la manera en que cuidas tus plantas
+            Únete a Yol ná y transforma la manera en que cuidas tus plantas
           </p>
           <Link to="/register">
             <Button size="lg" variant="secondary">

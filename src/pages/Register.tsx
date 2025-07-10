@@ -49,7 +49,7 @@ export const Register = () => {
         <div className="text-center">
           <Link to="/" className="flex items-center justify-center space-x-2 mb-8">
             <Leaf className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">PlantCare Pro</span>
+            <span className="text-2xl font-bold text-foreground">Yol ná</span>
           </Link>
           <h2 className="text-3xl font-bold text-foreground">
             Crear Cuenta
@@ -107,6 +107,17 @@ export const Register = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="tu@email.com"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="age">Ubicación</Label>
+                <Input
+                  id="local"
+                  name="city"
+                  type="city"
+                  onChange={handleChange}
+                  placeholder="25"
                   className="mt-1"
                 />
               </div>
