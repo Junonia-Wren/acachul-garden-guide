@@ -21,14 +21,17 @@ export const Privacy = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <FileText className="h-5 w-5 mr-2" />
-                Información General
+                ¿Para qué fines recabamos y utilizamos tus datos personales?
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-                PlantCare Pro se compromete a proteger la privacidad de nuestros usuarios. 
-                Este aviso de privacidad explica cómo recopilamos, utilizamos, almacenamos y 
-                protegemos tu información personal cuando utilizas nuestros servicios.
+               Sus datos personales serán utilizados para las siguientes finalidades:
+                - Proveer diagnóstico automatizado sobre el estado del Acachul.
+                - Mostrar métricas reales sobre tu zona.
+                - Enviar notificaciones al correo sobre eventos o recomendaciones.
+                - Administrar su cuenta de usuario.
+                - Mejorar la calidad y funcionalidad de la plataforma.
               </p>
             </CardContent>
           </Card>
@@ -50,6 +53,8 @@ export const Privacy = () => {
                     <li>Edad</li>
                     <li>Correo electrónico</li>
                     <li>Contraseña (almacenada de forma cifrada)</li>
+                    <li>Ubicación</li>
+                    
                   </ul>
                 </div>
 
@@ -122,12 +127,12 @@ export const Privacy = () => {
             </CardContent>
           </Card>
 
-          {/* Protección de datos */}
+          {/* datos personales sensibles */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Shield className="h-5 w-5 mr-2" />
-                Protección y Compartición de Datos
+                Datos Personales sensibles
               </CardTitle>
             </CardHeader>
             <CardContent>
