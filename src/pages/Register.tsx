@@ -186,7 +186,7 @@ export const Register = () => {
                 </p>
               </div>
 
-              <div exclassName="text-center mt-4 p-4 bg-muted rounded-lg">
+              <div className="text-center mt-4 p-4 bg-muted rounded-lg">
                 <p className="text-xs text-muted-foreground">
                   Al registrarte, aceptas nuestro{" "}
                   <Link to="/privacy" className="text-primary hover:underline">
