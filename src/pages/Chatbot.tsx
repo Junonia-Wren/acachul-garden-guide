@@ -16,7 +16,7 @@ export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: '¡Hola! Soy tu asistente virtual especializado en el cuidado de plantas de Acachul. ¿En qué puedo ayudarte hoy?',
+      text: '¡Hola, Soy Yol ná ! ¿En qué puedo ayudarte hoy?',
       sender: 'bot',
       timestamp: new Date()
     }
@@ -90,10 +90,10 @@ export const Chatbot = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground flex items-center">
             <MessageSquare className="h-8 w-8 mr-3 text-primary" />
-            Asistente Virtual
+           Yol Ná
           </h1>
           <p className="text-muted-foreground mt-2">
-            Pregúntame sobre el cuidado de tus plantas de Acachul
+            Haz cualquier pregunta sobre tu planta que tenga en mente.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export const Chatbot = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Bot className="h-5 w-5 mr-2" />
-                Chat con el Asistente
+                Chat con el Asistente YolNá
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
