@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Eye, EyeOff } from "lucide-react";
+import { registerUser } from "@/services/auth";
 
 export const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     age: "",
+    city: "",
     email: "",
     password: "",
     acceptPrivacy: false
@@ -20,19 +24,35 @@ export const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.acceptPrivacy) {
       alert("Debes aceptar el aviso de privacidad para continuar");
       return;
     }
 
     setIsLoading(true);
-    
-    // Aquí iría la lógica de registro
-    setTimeout(() => {
+
+    try {
+      const user = {
+        name: formData.name,
+        age: Number(formData.age),
+        email: formData.email,
+        password: formData.password,
+        city: formData.city
+      };
+
+      await registerUser(user);
+      navigate("/login");
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string } };
+      };
+
+      console.error("Error al registrar:", axiosError);
+      alert(axiosError.response?.data?.message || "Error en el registro");
+    } finally {
       setIsLoading(false);
-      console.log("Register attempt:", formData);
-    }, 1000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,14 +130,16 @@ export const Register = () => {
                   className="mt-1"
                 />
               </div>
+
               <div>
-                <Label htmlFor="age">Ubicación</Label>
+                <Label htmlFor="city">Ubicación</Label>
                 <Input
-                  id="local"
+                  id="city"
                   name="city"
-                  type="city"
+                  type="text"
+                  value={formData.city}
                   onChange={handleChange}
-                  placeholder="25"
+                  placeholder="Ciudad"
                   className="mt-1"
                 />
               </div>
@@ -154,12 +176,12 @@ export const Register = () => {
                 <Checkbox
                   id="acceptPrivacy"
                   checked={formData.acceptPrivacy}
-                  onCheckedChange={(checked) => 
+                  onCheckedChange={(checked) =>
                     setFormData(prev => ({ ...prev, acceptPrivacy: checked as boolean }))
                   }
                 />
-                <Label 
-                  htmlFor="acceptPrivacy" 
+                <Label
+                  htmlFor="acceptPrivacy"
                   className="text-sm text-muted-foreground cursor-pointer"
                 >
                   Acepto el{" "}

@@ -10,9 +10,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Servidor funcionando correctamente");
+});
+
 app.use("/api/auth", authRoutes);
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, (err) => {
+  if (err) {
+    console.error("Error iniciando el servidor:", err);
+  } else {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  }
 });
+

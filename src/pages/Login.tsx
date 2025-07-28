@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Eye, EyeOff } from "lucide-react";
+import { loginUser } from "@/services/auth";
+import { useAuth } from "@/context/AuthContext";
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,16 +15,29 @@ export const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { login } = useAuth(); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Aquí iría la lógica de autenticación
-    setTimeout(() => {
+
+    try {
+      const response = await loginUser(formData);
+
+      const { token, user } = response; 
+
+      login({ token, user }); 
+
+      navigate("/dashboard");
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      console.error("Error al iniciar sesión:", axiosError);
+      alert(axiosError.response?.data?.message || "Error en el inicio de sesión");
+    } finally {
       setIsLoading(false);
-      console.log("Login attempt:", formData);
-    }, 1000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

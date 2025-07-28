@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,14 +12,15 @@ import { Chatbot } from "./pages/Chatbot";
 import { Privacy } from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
+import { PrivateRoute } from "./components/PrivateRoute"; 
+import { useAuth } from "@/context/AuthContext"; // Opcional si usas para algo aquí o para públicas
+
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  };
+  // Ya no necesitas este estado local para autenticación
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const handleLogout = () => setIsAuthenticated(false);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,14 +29,20 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Layout isAuthenticated={isAuthenticated} onLogout={handleLogout} />}>
+            {/* Rutas públicas dentro del layout */}
+            <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="chatbot" element={<Chatbot />} />
               <Route path="privacy" element={<Privacy />} />
+
+              {/* Rutas privadas protegidas */}
+              <Route element={<PrivateRoute />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="chatbot" element={<Chatbot />} />
+              </Route>
             </Route>
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

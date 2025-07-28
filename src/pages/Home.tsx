@@ -19,7 +19,7 @@ export const Home = () => {
             optimiza el crecimiento de tus plantas.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register">
+            <Link to="/dashboard">
               <Button size="lg" className="w-full sm:w-auto">
                 Comenzar Ahora
               </Button>
