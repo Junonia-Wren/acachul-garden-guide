@@ -39,7 +39,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       // (Opcional) Guardar datos del usuario
       localStorage.setItem("user", JSON.stringify(data.user));
       console.log("Usuario logueado:", data.user);
-      navigate("/dashboard"); 
+      navigate("/"); //direccion a home 
 
     } else {
       alert(`⚠️ ${data.message}`);

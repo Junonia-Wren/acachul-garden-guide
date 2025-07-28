@@ -84,14 +84,31 @@ router.post("/login", async (req, res) => {
   }
 });
 
-import { verifyToken } from "../middleware/auth.js";
 
-// ✅ RUTA PROTEGIDA (ejemplo)
-router.get("/profile", verifyToken, (req, res) => {
-  res.json({
-    message: "Acceso concedido a la ruta protegida",
-    user: req.user
-  });
+
+// 🔒 Ruta protegida para obtener perfil del usuario
+router.get("/profile", (req, res) => {
+  const token = req.header("Authorization");
+
+  if (!token) {
+    return res.status(401).json({ message: "No token, acceso denegado" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Aquí puedes traer los datos del usuario desde la BD si quieres
+    res.json({
+      id: decoded.id,
+      email: decoded.email,
+      name: decoded.name
+    });
+  } catch (err) {
+    res.status(401).json({ message: "Token inválido" });
+  }
+});
+
+
 });
 
 
