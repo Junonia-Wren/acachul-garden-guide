@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -14,16 +16,42 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    // Aquí iría la lógica de autenticación
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("Login attempt:", formData);
-    }, 1000);
-  };
+  const navigate = useNavigate();
+
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
+
+  try {
+    const response = await fetch("http://localhost:4000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Login exitoso");
+      // Guardar token en localStorage para futuras peticiones
+      localStorage.setItem("token", data.token);
+      // (Opcional) Guardar datos del usuario
+      localStorage.setItem("user", JSON.stringify(data.user));
+      console.log("Usuario logueado:", data.user);
+      navigate("/dashboard"); 
+
+    } else {
+      alert(`⚠️ ${data.message}`);
+    }
+  } catch (error) {
+    console.error("Error en login:", error);
+    alert("Hubo un problema con el servidor");
+  } finally {
+    setIsLoading(false);
+  }
+};
+//fin de la logica de backend
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({

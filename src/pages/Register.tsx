@@ -7,33 +7,62 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Eye, EyeOff } from "lucide-react";
 
+//inicio de lógica del registro de usuario
+
 export const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     age: "",
     email: "",
     password: "",
+    city:"",
     acceptPrivacy: false
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.acceptPrivacy) {
-      alert("Debes aceptar el aviso de privacidad para continuar");
-      return;
-    }
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    setIsLoading(true);
-    
-    // Aquí iría la lógica de registro
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("Register attempt:", formData);
-    }, 1000);
-  };
+  if (!formData.acceptPrivacy) {
+    alert("Debes aceptar el aviso de privacidad para continuar");
+    return;
+  }
+
+  setIsLoading(true);
+
+  try {
+    const response = await fetch("http://localhost:4000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("✅ Usuario registrado con éxito");
+      setFormData({
+        name: "",
+        age: "",
+        email: "",
+        password: "",
+        city: "",
+        acceptPrivacy: false,
+      });
+    } else {
+      alert(`⚠️ Error: ${data.message}`);
+    }
+  } catch (error) {
+    console.error("❌ Error al registrar:", error);
+    alert("Hubo un problema con el servidor");
+  } finally {
+    setIsLoading(false);
+  }
+};
+//Fin de lógica del back de registro de usuario
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
@@ -49,7 +78,7 @@ export const Register = () => {
         <div className="text-center">
           <Link to="/" className="flex items-center justify-center space-x-2 mb-8">
             <Leaf className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">Yol ná</span>
+            <span className="text-2xl font-bold text-foreground">Yol Ná</span>
           </Link>
           <h2 className="text-3xl font-bold text-foreground">
             Crear Cuenta
@@ -113,12 +142,14 @@ export const Register = () => {
               <div>
                 <Label htmlFor="age">Ubicación</Label>
                 <Input
-                  id="local"
+                  id="city"
                   name="city"
-                  type="city"
+                  type="text"
+                  value={formData.city}
                   onChange={handleChange}
-                  placeholder="25"
+                  placeholder="Ciudad de México"
                   className="mt-1"
+                
                 />
               </div>
 
