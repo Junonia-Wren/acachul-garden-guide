@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Camera, BarChart3, BookOpen, Lightbulb } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import { Upload, Camera, BarChart3, BookOpen, Lightbulb, Heart} from "lucide-react";
+import { calculateHealthIndex, interpretPh, interpretHumidity, interpretLight, generateRecommendations} from "../lib/usePlantAnalysis";
 
 export const Dashboard = () => {
   const [plantData, setPlantData] = useState({
@@ -13,21 +14,38 @@ export const Dashboard = () => {
     description: "",
     ph: "",
     humidity: "",
-    light: ""
+    light: "",
   });
+
+  const [healthIndex, setHealthIndex] = useState<number | null>(null);
+  const [recommendations, setRecommendations] = useState<string[]>([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [tabValue, setTabValue] = useState("analysis");
+
+
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setPlantData(prev => ({ ...prev, image: file }));
+      setPlantData((prev) => ({ ...prev, image: file }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+ const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Plant analysis data:", plantData);
-    // Aquí iría la lógica de análisis
+    const ph = parseFloat(plantData.ph);
+    const humidity = parseFloat(plantData.humidity);
+    const light = parseFloat(plantData.light);
+
+    if (!isNaN(ph) && !isNaN(humidity) && !isNaN(light)) {
+      const score = calculateHealthIndex({ ph, humidity, light });
+      setHealthIndex(score);
+      setRecommendations(generateRecommendations(ph, humidity, light));
+      setHasSubmitted(true);
+      setTabValue("results");
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -39,7 +57,7 @@ export const Dashboard = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="analysis" className="space-y-6">
+        <Tabs value={tabValue} onValueChange={setTabValue} className="space-y-4">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="analysis">Análisis</TabsTrigger>
             <TabsTrigger value="results">Resultados</TabsTrigger>
@@ -48,12 +66,10 @@ export const Dashboard = () => {
 
           <TabsContent value="analysis" className="space-y-6">
             <div className="grid lg:grid-cols-2 gap-6">
-              {/* Formulario de análisis */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Camera className="h-5 w-5 mr-2" />
-                    Datos de la Planta
+                    <Camera className="h-5 w-5 mr-2" /> Datos de la Planta
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -93,7 +109,9 @@ export const Dashboard = () => {
                         id="description"
                         placeholder="Describe lo que observas en la planta: color de las hojas, manchas, crecimiento, etc."
                         value={plantData.description}
-                        onChange={(e) => setPlantData(prev => ({ ...prev, description: e.target.value }))}
+                        onChange={(e) =>
+                          setPlantData((prev) => ({ ...prev, description: e.target.value }))
+                        }
                         className="mt-1"
                         rows={4}
                       />
@@ -110,7 +128,9 @@ export const Dashboard = () => {
                           max="14"
                           placeholder="6.5"
                           value={plantData.ph}
-                          onChange={(e) => setPlantData(prev => ({ ...prev, ph: e.target.value }))}
+                          onChange={(e) =>
+                            setPlantData((prev) => ({ ...prev, ph: e.target.value }))
+                          }
                           className="mt-1"
                         />
                       </div>
@@ -124,7 +144,9 @@ export const Dashboard = () => {
                           max="100"
                           placeholder="65"
                           value={plantData.humidity}
-                          onChange={(e) => setPlantData(prev => ({ ...prev, humidity: e.target.value }))}
+                          onChange={(e) =>
+                            setPlantData((prev) => ({ ...prev, humidity: e.target.value }))
+                          }
                           className="mt-1"
                         />
                       </div>
@@ -135,9 +157,11 @@ export const Dashboard = () => {
                           id="light"
                           type="number"
                           min="0"
-                          placeholder="2000"
+                          placeholder="12000"
                           value={plantData.light}
-                          onChange={(e) => setPlantData(prev => ({ ...prev, light: e.target.value }))}
+                          onChange={(e) =>
+                            setPlantData((prev) => ({ ...prev, light: e.target.value }))
+                          }
                           className="mt-1"
                         />
                       </div>
@@ -150,12 +174,10 @@ export const Dashboard = () => {
                 </CardContent>
               </Card>
 
-              {/* Vista previa de datos */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <BarChart3 className="h-5 w-5 mr-2" />
-                    Resumen de Datos
+                    <BarChart3 className="h-5 w-5 mr-2" /> Resumen de Datos
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -169,11 +191,15 @@ export const Dashboard = () => {
                         </div>
                         <div>
                           <p className="text-muted-foreground">Humedad</p>
-                          <p className="font-medium">{plantData.humidity ? `${plantData.humidity}%` : "--"}</p>
+                          <p className="font-medium">
+                            {plantData.humidity ? `${plantData.humidity}%` : "--"}
+                          </p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">Luz</p>
-                          <p className="font-medium">{plantData.light ? `${plantData.light} lux` : "--"}</p>
+                          <p className="font-medium">
+                            {plantData.light ? `${plantData.light} lux` : "--"}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -181,9 +207,9 @@ export const Dashboard = () => {
                     <div className="p-4 bg-primary-light rounded-lg">
                       <h4 className="font-medium mb-2">Estado de la Imagen</h4>
                       <p className="text-sm text-muted-foreground">
-                        {plantData.image ? 
-                          "✅ Imagen cargada correctamente" : 
-                          "⏳ Esperando imagen de la planta"}
+                        {plantData.image
+                          ? "✅ Imagen cargada correctamente"
+                          : "⏳ Esperando imagen de la planta"}
                       </p>
                     </div>
 
@@ -200,24 +226,164 @@ export const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="results" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Lightbulb className="h-5 w-5 mr-2" />
-                  Resultados y Recomendaciones
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <BarChart3 className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No hay resultados disponibles</h3>
-                  <p className="text-muted-foreground">
-                    Primero analiza una planta en la pestaña "Análisis" para ver los resultados aquí
-                  </p>
+            {!hasSubmitted ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Lightbulb className="h-5 w-5 mr-2" />
+                    Resultados y Recomendaciones
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-12">
+                    <BarChart3 className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+                    <h3 className="text-lg font-medium mb-2">No hay resultados disponibles</h3>
+                    <p className="text-muted-foreground">
+                      Primero analiza una planta en la pestaña "Análisis" para ver los resultados aquí
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                  <Card className="col-span-1 lg:col-span-1">
+                    <CardHeader>
+                      <CardTitle>Índice de Salud</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-center space-y-2">
+
+                      <div className="flex items-center justify-center gap-3 text-5xl font-bold text-primary">
+                        <div className="relative w-10 h-10">
+                          <Heart className="w-10 h-10 text-muted-foreground" />
+                          <Heart
+                            className="w-10 h-10 text-bg-primary-light absolute top-0 left-0 transition-all duration-700 ease-in-out"
+                            style={{
+                              clipPath: `inset(${100 - (healthIndex ?? 0)}% 0 0 0)`
+                            }}
+                          />
+                        </div>
+                        <span>{healthIndex !== null ? `${healthIndex}%` : "--"}</span>
+                      </div>
+
+                      <p className="text-sm text-muted-foreground">
+                        Basado en comparación con valores óptimos
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-primary-light">
+                    <CardHeader>
+                      <CardTitle>pH del Suelo: <a className="text-muted-foreground font-medium">{plantData.ph || "--"}</a></CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-muted-foreground">Descripción</p>
+                          <p className="text-xl font-semibold">
+                            {plantData.ph ? interpretPh(parseFloat(plantData.ph)) : "No especificado"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">pH óptimo</p>
+                          <p className="font-medium">5.5 – 6.5 (ligeramente ácido)</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-accent/10">
+                    <CardHeader>
+                      <CardTitle>Humedad del Suelo: <a className="text-muted-foreground font-medium">{plantData.humidity || "--"}%</a></CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-muted-foreground">Descripción</p>
+                          <p className="text-xl font-semibold">
+                           {plantData.humidity ? interpretHumidity(parseFloat(plantData.humidity)) : "No especificado"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">% óptimo</p>
+                          <p className="font-medium">60% – 80% (capacidad de campo)</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-muted">
+                    <CardHeader>
+                      <CardTitle>Luz Solar: <a className="text-muted-foreground font-medium">{plantData.light || "--"} lux</a></CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-muted-foreground">Descripción</p>
+                          <p className="text-xl font-semibold">
+                            {plantData.light ? interpretLight(parseFloat(plantData.light)) : "No especificado"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground">lux óptimo</p>
+                          <p className="font-medium">10,000 – 25,000 lux (semisombra o sol filtrado)</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="col-span-1 lg:col-span-2">
+                    <CardHeader>
+                      <CardTitle>Diagnóstico de Enfermedad</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="font-medium text-muted-foreground">Nombre</p>
+                          <p className="text-lg">Ninguna detectada</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-muted-foreground">Síntomas</p>
+                          <p className="text-sm">No se observaron patrones anómalos</p>
+                        </div>
+                        <div className="col-span-2">
+                          <p className="font-medium text-muted-foreground">
+                            Tratamiento sugerido
+                          </p>
+                          <p className="text-sm">Ninguno necesario en este momento</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="col-span-1 lg:col-span-3">
+                    <CardHeader>
+                      <CardTitle>Recomendaciones Generales</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                        {recommendations.map((rec, index) => (
+                          <li key={index}>{rec}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
                 </div>
-              </CardContent>
-            </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Métricas Ambientales Locales</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      Aquí se mostrarán datos del clima, temperatura, precipitaciones, etc. relacionados con la ubicación.
+                    </p>
+                  </CardContent>
+                </Card>
+              </>
+            )}
           </TabsContent>
+
 
           <TabsContent value="catalog" className="space-y-6">
             <Card>
