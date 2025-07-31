@@ -1,6 +1,8 @@
+// src/lib/weather/useWeatherDetails.ts
+
 import { useEffect, useState } from "react";
 import { openWeatherClient } from "./openWeatherClient";
-import { formatTime } from "./weatherUtils";
+import { formatTime, kelvinToCelsius } from "./weatherUtils";
 
 interface WeatherDetails {
   pressure: number;
@@ -33,9 +35,8 @@ export const useWeatherDetails = (lat: number, lon: number) => {
 
   useEffect(() => {
     const fetchDetails = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-
         const response = await openWeatherClient.get<WeatherDetailsResponse>("/weather", {
           params: {
             lat,
@@ -46,17 +47,19 @@ export const useWeatherDetails = (lat: number, lon: number) => {
 
         const data = response.data;
 
-        setDetails({
+        const parsedDetails: WeatherDetails = {
           pressure: data.main.pressure,
-          feelsLike: Math.round(data.main.feels_like - 273.15), // Kelvin a °C
+          feelsLike: kelvinToCelsius(data.main.feels_like),
           sunrise: formatTime(data.sys.sunrise),
           sunset: formatTime(data.sys.sunset),
           visibility: data.visibility,
           cloudiness: data.clouds.all,
-        });
+        };
+
+        setDetails(parsedDetails);
       } catch (err) {
-        setError("Error al obtener los detalles del clima.");
         console.error(err);
+        setError("Error al obtener los detalles del clima.");
       } finally {
         setLoading(false);
       }
