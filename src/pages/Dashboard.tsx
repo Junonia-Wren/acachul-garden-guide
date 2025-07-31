@@ -10,6 +10,7 @@ import { calculateHealthIndex, interpretPh, interpretHumidity, interpretLight, g
 
 import { Tabs as InnerTabs, TabsList as InnerTabsList, TabsTrigger as InnerTabsTrigger, TabsContent as InnerTabsContent } from "@/components/ui/tabs";
 import CurrentWeatherPanel from "@/lib/weather/components/CurrentWeatherPanel";
+import HourlyForecastPanel from "@/lib/weather/components/HourlyForecastPanel";
 
 export const Dashboard = () => {
   const [plantData, setPlantData] = useState({
@@ -378,17 +379,6 @@ export const Dashboard = () => {
                     <CardTitle>Métricas Ambientales Locales</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      Aquí se mostrarán datos del clima, temperatura, precipitaciones, etc. relacionados con la ubicación.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Métricas Ambientales Locales</CardTitle>
-                  </CardHeader>
-                  <CardContent>
                     <InnerTabs defaultValue="current">
                       <InnerTabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-4">
                         <InnerTabsTrigger value="current">Tiempo Actual</InnerTabsTrigger>
@@ -401,6 +391,10 @@ export const Dashboard = () => {
 
                       <InnerTabsContent value="current">
                         <CurrentWeatherPanel />
+                      </InnerTabsContent>
+
+                      <InnerTabsContent value="hourly">
+                        <HourlyForecastPanel/>
                       </InnerTabsContent>
 
                       <InnerTabsContent value="trends">
