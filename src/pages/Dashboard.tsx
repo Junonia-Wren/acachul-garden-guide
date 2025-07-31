@@ -8,6 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import { Upload, Camera, BarChart3, BookOpen, Lightbulb, Heart} from "lucide-react";
 import { calculateHealthIndex, interpretPh, interpretHumidity, interpretLight, generateRecommendations} from "../lib/usePlantAnalysis";
 
+import { Tabs as InnerTabs, TabsList as InnerTabsList, TabsTrigger as InnerTabsTrigger, TabsContent as InnerTabsContent } from "@/components/ui/tabs";
+import CurrentWeatherPanel from "@/lib/weather/components/CurrentWeatherPanel";
+
 export const Dashboard = () => {
   const [plantData, setPlantData] = useState({
     image: null as File | null,
@@ -380,6 +383,37 @@ export const Dashboard = () => {
                     </p>
                   </CardContent>
                 </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Métricas Ambientales Locales</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <InnerTabs defaultValue="current">
+                      <InnerTabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-4">
+                        <InnerTabsTrigger value="current">Tiempo Actual</InnerTabsTrigger>
+                        <InnerTabsTrigger value="hourly">Por Hora</InnerTabsTrigger>
+                        <InnerTabsTrigger value="details">Detalles</InnerTabsTrigger>
+                        <InnerTabsTrigger value="maps">Mapas</InnerTabsTrigger>
+                        <InnerTabsTrigger value="monthly">Mensual</InnerTabsTrigger>
+                        <InnerTabsTrigger value="trends">Tendencias</InnerTabsTrigger>
+                      </InnerTabsList>
+
+                      <InnerTabsContent value="current">
+                        <CurrentWeatherPanel />
+                      </InnerTabsContent>
+
+                      <InnerTabsContent value="trends">
+                        <div className="text-muted-foreground text-center py-10">
+                          Panel de tendencias próximamente...
+                        </div>
+                      </InnerTabsContent>
+                    </InnerTabs>
+                  </CardContent>
+                </Card>
+
+
+
               </>
             )}
           </TabsContent>

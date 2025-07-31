@@ -1,24 +1,17 @@
+// src/lib/weather/useCurrentWeather.ts
+
 import { useEffect, useState } from "react";
 import { openWeatherClient } from "./openWeatherClient";
-import { formatWeatherData } from "./weatherUtils";
+import { formatWeatherData, CurrentWeather } from "./weatherUtils";
 
-interface CurrentWeather {
-  temperature: number;
-  description: string;
-  icon: string;
-  humidity: number;
-  windSpeed: number;
-  city: string;
-  country: string;
-  date: string;
-}
-
-export function useCurrentWeather(lat: number, lon: number) {
+export function useCurrentWeather(lat?: number, lon?: number) {
   const [weather, setWeather] = useState<CurrentWeather | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (lat == null || lon == null) return;
+
     const fetchWeather = async () => {
       try {
         setLoading(true);
@@ -27,27 +20,23 @@ export function useCurrentWeather(lat: number, lon: number) {
             lat,
             lon,
             units: "metric",
+            lang: "es",
           },
         });
-
         const data = formatWeatherData(response.data);
         setWeather(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
-          console.error(err);
         } else {
-          setError("Error desconocido.");
-          console.error("Error desconocido", err);
+          setError("Error desconocido al obtener el clima.");
         }
       } finally {
         setLoading(false);
       }
     };
 
-    if (lat && lon) {
-      fetchWeather();
-    }
+    fetchWeather();
   }, [lat, lon]);
 
   return { weather, loading, error };
