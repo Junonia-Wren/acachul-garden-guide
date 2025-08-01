@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { openWeatherClient } from "./openWeatherClient";
+import type { HourlyData } from "./weatherUtils";
+import { getDaySummaries } from "./weatherUtils";
 
 export interface HourlyForecastEntry {
   time: string;
@@ -11,6 +13,7 @@ export interface HourlyForecastEntry {
   precipitation: number;
   icon: string;
   description: string;
+  date: string; // para agrupar luego
 }
 
 interface ForecastAPIResponse {
@@ -30,13 +33,29 @@ interface ForecastAPIResponse {
       description: string;
       icon: string;
     }[];
+    dt_txt: string;
   }[];
 }
+
+export interface DaySummary {
+  date: string;
+  dayNumber: number;
+  dayName: string;
+  tempMax: number;
+  tempMin: number;
+  icon: string;
+}
+
+export type GroupedForecastByDay = {
+  [date: string]: HourlyData[];
+};
 
 export function useHourlyForecast(lat: number, lon: number) {
   const [forecast, setForecast] = useState<HourlyForecastEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [groupedForecastByDay, setGroupedForecastByDay] = useState<GroupedForecastByDay>({});
+  const [daySummaries, setDaySummaries] = useState<DaySummary[]>([]);
 
   useEffect(() => {
     const fetchForecast = async () => {
@@ -51,14 +70,17 @@ export function useHourlyForecast(lat: number, lon: number) {
           },
         });
 
-        const rawData = response.data.list.slice(0, 24); // próximas 24 horas
+        const rawData = response.data.list.slice(0, 40); // hasta 5 días * 8 periodos (3h cada uno)
+
+        // Formatear datos horarios
         const formattedData: HourlyForecastEntry[] = rawData.map((entry) => {
-          const date = new Date(entry.dt * 1000);
-          const time = date.toLocaleTimeString("es-MX", {
+          const dateObj = new Date(entry.dt * 1000);
+          const time = dateObj.toLocaleTimeString("es-MX", {
             hour: "2-digit",
             minute: "2-digit",
             hour12: true,
           });
+          const date = entry.dt_txt.split(" ")[0]; // yyyy-mm-dd
 
           return {
             time,
@@ -68,10 +90,34 @@ export function useHourlyForecast(lat: number, lon: number) {
             precipitation: entry.rain?.["3h"] ?? 0,
             icon: entry.weather[0].icon,
             description: entry.weather[0].description,
+            date,
           };
         });
 
         setForecast(formattedData);
+
+        // Agrupar por día
+        const grouped = formattedData.reduce<GroupedForecastByDay>((acc, curr) => {
+          if (!acc[curr.date]) acc[curr.date] = [];
+          acc[curr.date].push({
+            main: {
+              temp: curr.temperature,
+              humidity: curr.humidity,
+            },
+            weather: [{ icon: curr.icon, description: curr.description }],
+            windSpeed: curr.windSpeed,
+            precipitation: curr.precipitation,
+            dt_txt: `${curr.date} ${curr.time}`,
+          });
+          return acc;
+        }, {});
+
+
+        setGroupedForecastByDay(grouped);
+
+        // Obtener resumen por día (max, min, icono)
+        const summaries = getDaySummaries(grouped);
+        setDaySummaries(summaries);
       } catch (err: unknown) {
         if (err instanceof Error) setError(err.message);
         else setError("Error desconocido al obtener el pronóstico por hora.");
@@ -83,5 +129,5 @@ export function useHourlyForecast(lat: number, lon: number) {
     fetchForecast();
   }, [lat, lon]);
 
-  return { forecast, loading, error };
+  return { forecast, loading, error, groupedForecastByDay, daySummaries };
 }

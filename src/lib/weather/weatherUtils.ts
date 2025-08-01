@@ -90,3 +90,85 @@ function calculateDewPoint(temp: number, humidity: number): number {
   const dewPoint = (b * alpha) / (a - alpha);
   return Math.round(dewPoint);
 }
+
+/* --------- A partir de aquí funciones nuevas para el desglose por día --------- */
+
+// Interfaz para los datos horarios según OpenWeather para forecast
+export interface HourlyData {
+  main: {
+    temp: number;
+    humidity: number; // agregar
+  };
+  weather: {
+    icon: string;
+    description: string;
+  }[];
+  windSpeed: number;        // agregar aquí (a nivel de HourlyData)
+  precipitation: number;    // agregar aquí (a nivel de HourlyData)
+  dt_txt: string;
+}
+
+
+// Devuelve el nombre del día (Hoy, Lunes, Martes, etc.) según la fecha
+export function getDayName(dateString: string): string {
+  const date = new Date(dateString);
+  const today = new Date();
+  if (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  ) {
+    return "Hoy";
+  }
+  return date.toLocaleDateString("es-MX", { weekday: "long" });
+}
+
+// Función auxiliar para encontrar el elemento más frecuente en un array
+function mostFrequent(arr: string[]): string {
+  const frequency: { [key: string]: number } = {};
+  let maxFreq = 0;
+  let mostFreqItem = arr[0];
+
+  arr.forEach((item) => {
+    frequency[item] = (frequency[item] || 0) + 1;
+    if (frequency[item] > maxFreq) {
+      maxFreq = frequency[item];
+      mostFreqItem = item;
+    }
+  });
+
+  return mostFreqItem;
+}
+
+// Devuelve un resumen por día con máximo, mínimo y icono principal
+export function getDaySummaries(
+  groupedForecast: { [date: string]: HourlyData[] }
+): {
+  date: string;
+  dayNumber: number;
+  dayName: string;
+  tempMax: number;
+  tempMin: number;
+  icon: string;
+}[] {
+  return Object.entries(groupedForecast).map(([date, hours]) => {
+    const temps = hours.map((h) => h.main.temp);
+    const tempMax = Math.max(...temps);
+    const tempMin = Math.min(...temps);
+
+    const icons = hours.map((h) => h.weather[0].icon);
+    const icon = mostFrequent(icons);
+
+    const dayName = getDayName(date);
+    const dayNumber = new Date(date).getDate();
+
+    return {
+      date,
+      dayNumber,
+      dayName,
+      tempMax: Math.round(tempMax),
+      tempMin: Math.round(tempMin),
+      icon,
+    };
+  });
+}
