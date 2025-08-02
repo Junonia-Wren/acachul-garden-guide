@@ -1,3 +1,5 @@
+// src/lib/weather/components/HourlyForecastPanel.tsx
+
 import { useState, useEffect } from "react";
 import { useHourlyForecast, DaySummary, GroupedForecastByDay } from "@/lib/weather/useHourlyForecast";
 import type { HourlyData, getWeatherIconUrl } from "@/lib/weather/weatherUtils";
@@ -327,7 +329,8 @@ const ForecastXAxisTop = ({ data }: { data: HourlyData[] }) => {
   return (
     <div className="flex w-full overflow-x-auto px-4 pb-2 justify-between text-center text-xs text-muted-foreground">
       {data.map((hour, idx) => {
-        const date = new Date(hour.dt_txt);
+        const dt = hour.dt_txt.replace(" ", "T");
+        const date = new Date(dt); // o new Date(`${dt}Z`);
         const hourLabel = date.toLocaleTimeString("es-MX", {
           hour: "numeric",
           hour12: true,
@@ -346,4 +349,3 @@ const ForecastXAxisTop = ({ data }: { data: HourlyData[] }) => {
     </div>
   );
 };
-
