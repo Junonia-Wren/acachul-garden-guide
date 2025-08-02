@@ -313,10 +313,37 @@ export default function HourlyForecastPanel() {
 
       {/* Gráfico */}
       <div className="h-72">
-        <ResponsiveContainer width="100%" height="100%">
+        <ForecastXAxisTop data={hourlyDataForSelectedDay} />
+        <ResponsiveContainer width="100%" height={300}>
+
           {renderChart()}
         </ResponsiveContainer>
       </div>
     </div>
   );
 }
+
+const ForecastXAxisTop = ({ data }: { data: HourlyData[] }) => {
+  return (
+    <div className="flex w-full overflow-x-auto px-4 pb-2 justify-between text-center text-xs text-muted-foreground">
+      {data.map((hour, idx) => {
+        const date = new Date(hour.dt_txt);
+        const hourLabel = date.toLocaleTimeString("es-MX", {
+          hour: "numeric",
+          hour12: true,
+        });
+        const iconUrl = `https://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`;
+        const temperature = Math.round(hour.main.temp);
+
+        return (
+          <div key={idx} className="flex flex-col items-center min-w-[40px]">
+            <span className="font-medium">{hourLabel}</span>
+            <img src={iconUrl} alt="icono" className="h-6 w-6" />
+            <span>{temperature}°C</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
