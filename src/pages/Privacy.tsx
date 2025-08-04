@@ -11,7 +11,7 @@ export const Privacy = () => {
             Aviso de Privacidad
           </h1>
           <p className="text-muted-foreground mt-2">
-            Información sobre el tratamiento de tus datos personales
+            Yol na, plataforma digital gestionada por “Violet”, con ubicación en Xicotepec de Juárez Puebla, México, es responsable del tratamiento de sus datos personales.
           </p>
         </div>
 
@@ -26,7 +26,7 @@ export const Privacy = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-               Sus datos personales serán utilizados para las siguientes finalidades:
+                Sus datos personales serán utilizados para las siguientes finalidades:
                 - Proveer diagnóstico automatizado sobre el estado del Acachul.
                 - Mostrar métricas reales sobre tu zona.
                 - Enviar notificaciones al correo sobre eventos o recomendaciones.
@@ -47,35 +47,24 @@ export const Privacy = () => {
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium mb-2">Datos de registro:</h4>
+                  <h4 className="font-medium mb-2">Proporcionados directamente:</h4>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
                     <li>Nombre completo</li>
                     <li>Edad</li>
                     <li>Correo electrónico</li>
-                    <li>Contraseña (almacenada de forma cifrada)</li>
+                    <li>Contraseña</li>
                     <li>Ubicación</li>
-                    
+                    <li>Fotografías de plantas</li>
+                    <li>Datos manuales de sensores (pH, humedad, temperatura, luz)</li>
                   </ul>
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-2">Datos de uso del sistema:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    <li>Imágenes de plantas subidas para análisis</li>
-                    <li>Descripciones del estado visual de las plantas</li>
-                    <li>Valores de sensores (pH, humedad, niveles de luz)</li>
-                    <li>Conversaciones con el chatbot</li>
-                    <li>Historial de análisis y recomendaciones</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-medium mb-2">Datos técnicos:</h4>
+                  <h4 className="font-medium mb-2">Sitio web o servicios en línea:</h4>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
                     <li>Dirección IP</li>
-                    <li>Tipo de navegador y sistema operativo</li>
-                    <li>Fecha y hora de acceso</li>
-                    <li>Páginas visitadas dentro del sistema</li>
+                    <li>Tipo de navegador</li>
+                    <li>Actividad de navegación dentro de la plataforma</li>
                   </ul>
                 </div>
               </div>
@@ -93,34 +82,9 @@ export const Privacy = () => {
             <CardContent>
               <div className="space-y-3">
                 <div className="p-3 bg-primary-light rounded-lg">
-                  <h4 className="font-medium text-primary mb-1">Análisis de plantas:</h4>
+                  <h4 className="font-medium text-primary mb-1">Finalidades descritas:</h4>
                   <p className="text-sm text-muted-foreground">
-                    Procesamos las imágenes y datos de sensores para diagnosticar el estado 
-                    de salud de tus plantas y generar recomendaciones personalizadas.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-accent/10 rounded-lg">
-                  <h4 className="font-medium text-accent mb-1">Mejora del sistema:</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Utilizamos los datos de forma agregada y anónima para mejorar nuestros 
-                    algoritmos de detección y la precisión de las recomendaciones.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-success/10 rounded-lg">
-                  <h4 className="font-medium text-success mb-1">Comunicación:</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Enviamos notificaciones importantes sobre tu cuenta, actualizaciones 
-                    del sistema y consejos relacionados con el cuidado de plantas.
-                  </p>
-                </div>
-
-                <div className="p-3 bg-muted rounded-lg">
-                  <h4 className="font-medium mb-1">Soporte técnico:</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Para resolver problemas técnicos y responder a tus consultas sobre 
-                    el funcionamiento del sistema.
+                    Los datos personales serán utilizados únicamente para las finalidades descritas en el presente aviso de privacidad y no serán divulgados ni compartidos con terceros sin su consentimiento expreso, salvo en los casos permitidos por la ley.
                   </p>
                 </div>
               </div>
@@ -138,22 +102,18 @@ export const Privacy = () => {
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium mb-2 text-success">✅ Compromisos de seguridad:</h4>
+                  <h4 className="font-medium mb-2 text-success">✅ Datos sensibles recabados:</h4>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    <li>Utilizamos cifrado SSL/TLS para proteger la transmisión de datos</li>
-                    <li>Las contraseñas se almacenan con cifrado irreversible</li>
-                    <li>Acceso limitado a personal autorizado únicamente</li>
-                    <li>Copias de seguridad regulares y seguras</li>
-                    <li>Monitoreo continuo de seguridad</li>
+                    <li>Nombre completo</li>
+                    <li>Ubicación geográfica</li>
+                    <li>Contraseña de acceso (en formato cifrado)</li>
                   </ul>
                 </div>
 
                 <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-                  <h4 className="font-medium text-destructive mb-2">🔒 No compartimos tus datos</h4>
+                  <h4 className="font-medium text-destructive mb-2">🔒 Seguridad y confidencialidad</h4>
                   <p className="text-sm text-muted-foreground">
-                    <strong>Nunca vendemos, alquilamos o compartimos</strong> tu información personal 
-                    con terceros para fines comerciales. Tus datos permanecen confidenciales y 
-                    se utilizan exclusivamente para los fines descritos en este aviso.
+                    Nos comprometemos a implementar y mantener medidas administrativas, técnicas y físicas que garanticen la protección de estos datos contra daño, pérdida, alteración, destrucción o acceso no autorizado.
                   </p>
                 </div>
               </div>
@@ -168,30 +128,30 @@ export const Privacy = () => {
             <CardContent>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <h4 className="font-medium">Derecho de acceso:</h4>
+                  <h4 className="font-medium">Acceso:</h4>
                   <p className="text-sm text-muted-foreground">
-                    Solicitar información sobre qué datos tenemos de ti
+                    Conocer qué datos personales tenemos de usted, para qué los usamos y las condiciones del uso que les damos.
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="font-medium">Derecho de rectificación:</h4>
+                  <h4 className="font-medium">Rectificación:</h4>
                   <p className="text-sm text-muted-foreground">
-                    Corregir o actualizar información incorrecta
+                    Solicitar la corrección de su información personal si está incorrecta, inexacta o incompleta.
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="font-medium">Derecho de eliminación:</h4>
+                  <h4 className="font-medium">Cancelación:</h4>
                   <p className="text-sm text-muted-foreground">
-                    Solicitar la eliminación de tu cuenta y datos
+                    Pedir que eliminemos sus datos si considera que no están siendo usados conforme a la ley.
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="font-medium">Derecho de oposición:</h4>
+                  <h4 className="font-medium">Oposición:</h4>
                   <p className="text-sm text-muted-foreground">
-                    Oponerte al procesamiento de tus datos
+                    Oponerse al uso de sus datos personales para fines específicos.
                   </p>
                 </div>
               </div>
@@ -209,19 +169,18 @@ export const Privacy = () => {
             <CardContent>
               <div className="space-y-4">
                 <p className="text-muted-foreground">
-                  Si tienes preguntas sobre este aviso de privacidad o deseas ejercer 
-                  alguno de tus derechos, puedes contactarnos:
+                  Para cualquier duda, aclaración o solicitud relacionada con sus datos personales, puede comunicarse con:
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-3 bg-muted rounded-lg">
                     <h4 className="font-medium mb-1">Correo electrónico:</h4>
-                    <p className="text-sm text-primary">privacidad@plantcarepro.com</p>
+                    <p className="text-sm text-primary">220701@utxicotepec.edu.mx</p>
                   </div>
 
                   <div className="p-3 bg-muted rounded-lg">
-                    <h4 className="font-medium mb-1">Tiempo de respuesta:</h4>
-                    <p className="text-sm text-muted-foreground">Máximo 30 días hábiles</p>
+                    <h4 className="font-medium mb-1">Correo para solicitudes ARCO:</h4>
+                    <p className="text-sm text-muted-foreground">220483@utxicotepec.edu.mx</p>
                   </div>
                 </div>
 

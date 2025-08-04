@@ -1,14 +1,17 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Leaf, MessageSquare, User, LogOut } from "lucide-react";
+import { Leaf, MessageSquare, User, LogOut, SquareKanban} from "lucide-react";
+import { useAuth } from "@/context/AuthContext"; 
 
-interface LayoutProps {
-  isAuthenticated?: boolean;
-  onLogout?: () => void;
-}
-
-export const Layout = ({ isAuthenticated = false, onLogout }: LayoutProps) => {
+export const Layout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth(); 
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -21,20 +24,28 @@ export const Layout = ({ isAuthenticated = false, onLogout }: LayoutProps) => {
             </Link>
 
             <nav className="flex items-center space-x-4">
-              {isAuthenticated ? (
+              {user ? (
                 <>
+                  <span className="text-sm text-muted-foreground flex items-center">
+                    <User className="h-4 w-4 mr-1" />
+                    {user.name}
+                  </span>
+
                   <Link to="/dashboard">
                     <Button variant={location.pathname === '/dashboard' ? 'default' : 'ghost'}>
+                      <SquareKanban className="h-4 w-4 mr-2" />
                       Panel Principal
                     </Button>
                   </Link>
+
                   <Link to="/chatbot">
                     <Button variant={location.pathname === '/chatbot' ? 'default' : 'ghost'}>
                       <MessageSquare className="h-4 w-4 mr-2" />
                       Asistente
                     </Button>
                   </Link>
-                  <Button variant="ghost" onClick={onLogout}>
+
+                  <Button variant="ghost" onClick={handleLogout}>
                     <LogOut className="h-4 w-4 mr-2" />
                     Cerrar Sesión
                   </Button>

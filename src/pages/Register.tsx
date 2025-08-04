@@ -1,68 +1,59 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Eye, EyeOff } from "lucide-react";
-
-//inicio de lógica del registro de usuario
+import { registerUser } from "@/services/auth";
 
 export const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     age: "",
+    city: "",
     email: "",
     password: "",
-    city:"",
     acceptPrivacy: false
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (!formData.acceptPrivacy) {
-    alert("Debes aceptar el aviso de privacidad para continuar");
-    return;
-  }
-
-  setIsLoading(true);
-
-  try {
-    const response = await fetch("http://localhost:4000/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert("✅ Usuario registrado con éxito");
-      setFormData({
-        name: "",
-        age: "",
-        email: "",
-        password: "",
-        city: "",
-        acceptPrivacy: false,
-      });
-    } else {
-      alert(`⚠️ Error: ${data.message}`);
+    if (!formData.acceptPrivacy) {
+      alert("Debes aceptar el aviso de privacidad para continuar");
+      return;
     }
-  } catch (error) {
-    console.error("❌ Error al registrar:", error);
-    alert("Hubo un problema con el servidor");
-  } finally {
-    setIsLoading(false);
-  }
-};
-//Fin de lógica del back de registro de usuario
+
+    setIsLoading(true);
+
+    try {
+      const user = {
+        name: formData.name,
+        age: Number(formData.age),
+        email: formData.email,
+        password: formData.password,
+        city: formData.city
+      };
+
+      await registerUser(user);
+      navigate("/login");
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { message?: string } };
+      };
+
+      console.error("Error al registrar:", axiosError);
+      alert(axiosError.response?.data?.message || "Error en el registro");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
@@ -78,7 +69,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         <div className="text-center">
           <Link to="/" className="flex items-center justify-center space-x-2 mb-8">
             <Leaf className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">Yol Ná</span>
+            <span className="text-2xl font-bold text-foreground">Yol ná</span>
           </Link>
           <h2 className="text-3xl font-bold text-foreground">
             Crear Cuenta
@@ -139,17 +130,17 @@ const handleSubmit = async (e: React.FormEvent) => {
                   className="mt-1"
                 />
               </div>
+
               <div>
-                <Label htmlFor="age">Ubicación</Label>
+                <Label htmlFor="city">Ubicación</Label>
                 <Input
                   id="city"
                   name="city"
                   type="text"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="Ciudad de México"
+                  placeholder="Ciudad"
                   className="mt-1"
-                
                 />
               </div>
 
@@ -185,12 +176,12 @@ const handleSubmit = async (e: React.FormEvent) => {
                 <Checkbox
                   id="acceptPrivacy"
                   checked={formData.acceptPrivacy}
-                  onCheckedChange={(checked) => 
+                  onCheckedChange={(checked) =>
                     setFormData(prev => ({ ...prev, acceptPrivacy: checked as boolean }))
                   }
                 />
-                <Label 
-                  htmlFor="acceptPrivacy" 
+                <Label
+                  htmlFor="acceptPrivacy"
                   className="text-sm text-muted-foreground cursor-pointer"
                 >
                   Acepto el{" "}

@@ -10,8 +10,8 @@ export const Home = () => {
       <section className="bg-gradient-to-br from-primary-light to-background py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Cuida tus plantas con
-            <span className="text-primary block">inteligencia artificial</span>
+            Comienza tu guía 
+            <span className="text-primary block">de cuidado</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             Sistema avanzado de monitoreo y diagnóstico para plantas de Acachul. 
@@ -19,7 +19,7 @@ export const Home = () => {
             optimiza el crecimiento de tus plantas.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/register">
+            <Link to="/dashboard">
               <Button size="lg" className="w-full sm:w-auto">
                 Comenzar Ahora
               </Button>
