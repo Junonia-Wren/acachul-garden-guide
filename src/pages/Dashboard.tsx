@@ -11,6 +11,8 @@ import { calculateHealthIndex, interpretPh, interpretHumidity, interpretLight, g
 import { Tabs as InnerTabs, TabsList as InnerTabsList, TabsTrigger as InnerTabsTrigger, TabsContent as InnerTabsContent } from "@/components/ui/tabs";
 import CurrentWeatherPanel from "@/lib/weather/components/CurrentWeatherPanel";
 import HourlyForecastPanel from "@/lib/weather/components/HourlyForecastPanel";
+import {WeatherDetailsPanel} from "@/lib/weather/components/WeatherDetailsPanel";
+
 
 export const Dashboard = () => {
   const [plantData, setPlantData] = useState({
@@ -395,6 +397,10 @@ export const Dashboard = () => {
 
                       <InnerTabsContent value="hourly">
                         <HourlyForecastPanel/>
+                      </InnerTabsContent>
+
+                      <InnerTabsContent value="details">
+                        <WeatherDetailsPanel/>
                       </InnerTabsContent>
 
                       <InnerTabsContent value="trends">
