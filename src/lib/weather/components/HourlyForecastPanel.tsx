@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useHourlyForecast, DaySummary, GroupedForecastByDay } from "@/lib/weather/useHourlyForecast";
-import type { HourlyData, getWeatherIconUrl } from "@/lib/weather/weatherUtils";
+import type { HourlyData } from "@/lib/weather/weatherUtils";
 import {
   AreaChart,
   Area,
@@ -13,6 +13,8 @@ import {
   CartesianGrid,
 } from "recharts";
 import { getWeatherIconUrl as getIconUrl } from "@/lib/weather/weatherUtils";
+
+import { getHourFromDtTxt } from "@/lib/weather/weatherUtils";
 
 const TABS = ["General", "Precipitaciones", "Humedad", "Viento"] as const;
 type TabType = typeof TABS[number];
@@ -255,6 +257,75 @@ export default function HourlyForecastPanel() {
     }
   };
 
+  //Leyenda degradado
+
+  const renderLegend = () => {
+    let gradientId = "";
+    let label = "";
+
+    switch (activeTab) {
+      case "General":
+        gradientId = "colorTempGradient";
+        label = "Temperatura";
+        break;
+      case "Precipitaciones":
+        gradientId = "colorPrecipitationGradient";
+        label = "Precipitación";
+        break;
+      case "Humedad":
+        gradientId = "colorHumidityGradient";
+        label = "Humedad";
+        break;
+      case "Viento":
+        gradientId = "colorWindGradient";
+        label = "Viento";
+        break;
+      default:
+        return null;
+    }
+
+    return (
+      <div className="flex items-center space-x-2 mt-2 justify-center">
+        {/* Círculo con degradado */}
+        <svg width="16" height="16">
+          <defs>
+            <linearGradient id={`legend-${gradientId}`} x1="0" y1="0" x2="1" y2="0">
+              {/* Usa los mismos colores que en las gráficas */}
+              {gradientId === "colorTempGradient" && (
+                <>
+                  <stop offset="0%" stopColor="#ef4444" />
+                  <stop offset="50%" stopColor="#22c55e" />
+                  <stop offset="100%" stopColor="#60a5fa" />
+                </>
+              )}
+              {gradientId === "colorPrecipitationGradient" && (
+                <>
+                  <stop offset="0%" stopColor="#0ea5e9" />
+                  <stop offset="100%" stopColor="#60a5fa" />
+                </>
+              )}
+              {gradientId === "colorHumidityGradient" && (
+                <>
+                  <stop offset="0%" stopColor="#22c55e" />
+                  <stop offset="100%" stopColor="#a7f3d0" />
+                </>
+              )}
+              {gradientId === "colorWindGradient" && (
+                <>
+                  <stop offset="0%" stopColor="#f97316" />
+                  <stop offset="100%" stopColor="#fcd34d" />
+                </>
+              )}
+            </linearGradient>
+          </defs>
+          <circle cx="8" cy="8" r="8" fill={`url(#legend-${gradientId})`} />
+        </svg>
+        <span className="text-sm text-gray-700">{label}</span>
+      </div>
+    );
+  };
+
+
   return (
     <div className="p-6 bg-white rounded-2xl shadow-md space-y-6">
       {/* Selector de pestañas */}
@@ -321,20 +392,18 @@ export default function HourlyForecastPanel() {
           {renderChart()}
         </ResponsiveContainer>
       </div>
+          {renderLegend()}
     </div>
   );
 }
 
+
+//Formula Horas por dia
 const ForecastXAxisTop = ({ data }: { data: HourlyData[] }) => {
   return (
     <div className="flex w-full overflow-x-auto px-4 pb-2 justify-between text-center text-xs text-muted-foreground">
       {data.map((hour, idx) => {
-        const dt = hour.dt_txt.replace(" ", "T");
-        const date = new Date(dt); // o new Date(`${dt}Z`);
-        const hourLabel = date.toLocaleTimeString("es-MX", {
-          hour: "numeric",
-          hour12: true,
-        });
+        const hourLabel = getHourFromDtTxt(hour.dt_txt);
         const iconUrl = `https://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`;
         const temperature = Math.round(hour.main.temp);
 
