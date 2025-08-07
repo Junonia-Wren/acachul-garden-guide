@@ -14,8 +14,8 @@ export interface UseWeatherMapTileOptions {
 }
 
 const DEFAULT_COORDS = {
-  lat: 19.4326, // CDMX fallback
-  lon: -99.1332,
+  lat: 20.2770,
+  lon: -97.9611
 };
 
 export const useWeatherMapTile = ({
