@@ -336,7 +336,7 @@ export default function HourlyForecastPanel() {
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 rounded-full text-sm font-medium ${
               activeTab === tab
-                ? "bg-blue-600 text-white"
+                ? "bg-green-600 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
@@ -352,7 +352,7 @@ export default function HourlyForecastPanel() {
             key={date}
             onClick={() => setSelectedDate(date)}
             className={`cursor-pointer rounded-lg p-4 border ${
-              selectedDate === date ? "border-blue-600 bg-blue-50" : "border-gray-300"
+              selectedDate === date ? "border-green-600 bg-green-50" : "border-gray-300"
             } flex flex-col items-center min-w-[100px]`}
           >
             <div className="w-full flex justify-between text-xs font-semibold mb-2">
