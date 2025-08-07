@@ -12,6 +12,8 @@ import { Tabs as InnerTabs, TabsList as InnerTabsList, TabsTrigger as InnerTabsT
 import CurrentWeatherPanel from "@/lib/weather/components/CurrentWeatherPanel";
 import HourlyForecastPanel from "@/lib/weather/components/HourlyForecastPanel";
 import {WeatherDetailsPanel} from "@/lib/weather/components/WeatherDetailsPanel";
+import WeatherMapPanel from "@/lib/weather/components/WeatherMapPanel";
+
 
 
 export const Dashboard = () => {
@@ -401,6 +403,10 @@ export const Dashboard = () => {
 
                       <InnerTabsContent value="details">
                         <WeatherDetailsPanel/>
+                      </InnerTabsContent>
+
+                      <InnerTabsContent value="maps">
+                        <WeatherMapPanel/>
                       </InnerTabsContent>
 
                       <InnerTabsContent value="trends">
