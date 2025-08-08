@@ -13,7 +13,7 @@ import CurrentWeatherPanel from "@/lib/weather/components/CurrentWeatherPanel";
 import HourlyForecastPanel from "@/lib/weather/components/HourlyForecastPanel";
 import {WeatherDetailsPanel} from "@/lib/weather/components/WeatherDetailsPanel";
 import WeatherMapPanel from "@/lib/weather/components/WeatherMapPanel";
-
+import MonthlyWeatherPanel from "@/lib/weather/components/MonthlyForecastPanel";
 
 
 export const Dashboard = () => {
@@ -383,7 +383,7 @@ export const Dashboard = () => {
                     <CardTitle>Métricas Ambientales Locales</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <InnerTabs defaultValue="current">
+                    <InnerTabs defaultValue="maps">
                       <InnerTabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-4">
                         <InnerTabsTrigger value="current">Tiempo Actual</InnerTabsTrigger>
                         <InnerTabsTrigger value="hourly">Por Hora</InnerTabsTrigger>
@@ -407,6 +407,10 @@ export const Dashboard = () => {
 
                       <InnerTabsContent value="maps">
                         <WeatherMapPanel/>
+                      </InnerTabsContent>
+
+                      <InnerTabsContent value="monthly">
+                        <MonthlyWeatherPanel minTempLimit={21} maxTempLimit={29} />
                       </InnerTabsContent>
 
                       <InnerTabsContent value="trends">
