@@ -14,7 +14,7 @@ import HourlyForecastPanel from "@/lib/weather/components/HourlyForecastPanel";
 import {WeatherDetailsPanel} from "@/lib/weather/components/WeatherDetailsPanel";
 import WeatherMapPanel from "@/lib/weather/components/WeatherMapPanel";
 import MonthlyWeatherPanel from "@/lib/weather/components/MonthlyForecastPanel";
-
+import WeatherTrendsPanel from "@/lib/weather/components/WeatherTrendsPanel";
 
 export const Dashboard = () => {
   const [plantData, setPlantData] = useState({
@@ -414,9 +414,7 @@ export const Dashboard = () => {
                       </InnerTabsContent>
 
                       <InnerTabsContent value="trends">
-                        <div className="text-muted-foreground text-center py-10">
-                          Panel de tendencias próximamente...
-                        </div>
+                       < WeatherTrendsPanel/>
                       </InnerTabsContent>
                     </InnerTabs>
                   </CardContent>
