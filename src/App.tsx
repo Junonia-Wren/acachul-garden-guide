@@ -11,7 +11,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { Chatbot } from "./pages/Chatbot";
 import { Privacy } from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
-
+import { Information } from "./pages/information";
+import{ Contac} from "./pages/contac";
 import { PrivateRoute } from "./components/PrivateRoute"; 
 import { useAuth } from "@/context/AuthContext"; // Opcional si usas para algo aquí o para públicas
 
@@ -35,6 +36,9 @@ const App = () => {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="privacy" element={<Privacy />} />
+              <Route path="info" element={<Information />} />
+              <Route path="contac" element={<Contac />} />
+
 
               {/* Rutas privadas protegidas */}
               <Route element={<PrivateRoute />}>

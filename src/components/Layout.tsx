@@ -45,6 +45,20 @@ export const Layout = () => {
                     </Button>
                   </Link>
 
+                   <Link to="/info">
+                    <Button variant={location.pathname === '/info' ? 'default' : 'ghost'}>
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Información
+                    </Button>
+                  </Link>
+
+                  <Link to="/contac">
+                    <Button variant={location.pathname === '/contac' ? 'default' : 'ghost'}>
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Contac
+                    </Button>
+                  </Link>
+
                   <Button variant="ghost" onClick={handleLogout}>
                     <LogOut className="h-4 w-4 mr-2" />
                     Cerrar Sesión
