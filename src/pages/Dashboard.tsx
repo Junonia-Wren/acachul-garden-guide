@@ -383,7 +383,7 @@ export const Dashboard = () => {
                     <CardTitle>Métricas Ambientales Locales</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <InnerTabs defaultValue="maps">
+                    <InnerTabs defaultValue="hourly">
                       <InnerTabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-4">
                         <InnerTabsTrigger value="current">Tiempo Actual</InnerTabsTrigger>
                         <InnerTabsTrigger value="hourly">Por Hora</InnerTabsTrigger>
