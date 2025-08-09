@@ -2,19 +2,18 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Leaf, Camera, BarChart3, MessageSquare } from "lucide-react";
-import React from 'react';
+
 
 
 
 export const Information = () => {
   return (
     <div className="min-h-screen font-sans bg-gray-100">
-      {/* Encabezado con imagen de fondo */}
-      {/* Coloca aquí la imagen del encabezado, por ejemplo, `header-bg.jpg` */}
+        
       <section
-        className="relative h-60 bg-cover bg-center flex items-center justify-center"
+        className="relative h-80 bg-cover bg-center flex items-center justify-center"
         style={{
-          backgroundImage: "url('/Imagenes/header-bg.jpg')", // Cambia el nombre si es diferente
+          backgroundImage: "url('/Imagenes/18.png')",
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
@@ -25,7 +24,7 @@ export const Information = () => {
         </div>
       </section>
 
-      {/* Tarjetas superiores con imagen y texto (el diseño que buscas) */}
+      
       <section className="relative z-20 -mt-20 px-4">
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
           
@@ -33,7 +32,6 @@ export const Information = () => {
           <div className="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center text-center">
             <p className="text-sm font-medium text-gray-700 mb-2">¿Cómo saber si tu acahul esta sano?</p>
             <div className="w-16 h-16 rounded-full overflow-hidden mb-2">
-              {/* Asegúrate de que esta imagen exista en public/Imagenes/acahul-sano.jpg */}
               <img src="/Imagenes/10.png" alt="Acahul sano" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -42,7 +40,6 @@ export const Information = () => {
           <div className="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center text-center">
             <p className="text-sm font-medium text-gray-700 mb-2">¿Cómo tomar una buena foto?</p>
             <div className="w-16 h-16 rounded-full overflow-hidden mb-2">
-              {/* Asegúrate de que esta imagen exista en public/Imagenes/tomar-foto.jpg */}
               <img src="/Imagenes/16.jpg" alt="Tomar foto" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -51,7 +48,7 @@ export const Information = () => {
           <div className="bg-white rounded-2xl shadow-lg p-4 flex flex-col items-center text-center">
             <p className="text-sm font-medium text-gray-700 mb-2">Guía básica de cuidados</p>
             <div className="w-16 h-16 rounded-full overflow-hidden mb-2">
-              {/* Asegúrate de que esta imagen exista en public/Imagenes/guia-cuidados.jpg */}
+              
               <img src="/Imagenes/4.jpeg" alt="Guía de cuidados" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -64,7 +61,7 @@ export const Information = () => {
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 max-w-5xl mx-auto px-4">
           {[
-            // Asegúrate de que estas imágenes existan en public/Imagenes/ con estos nombres
+
             "/Imagenes/8.jpeg",
             "/Imagenes/12.png",
             "/Imagenes/2.jpeg",
