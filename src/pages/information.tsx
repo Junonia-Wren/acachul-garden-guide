@@ -437,6 +437,19 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
   
 
       
+{/* --- SECCIÓN: Valores de Yolná --- */}
+      <section className="py-16 bg-white px-4 text-gray-700 text-center">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-4xl font-bold text-green-600 mb-4">¡En Yolná, esto es lo que nos mueve!</h2>
+          <p className="max-w-xl mx-auto text-lg leading-relaxed mb-8">
+            Los valores de Yolná representan aquello en lo que creemos y cómo elegimos desarrollar nuestra actividad. Son los principios que rigen todo lo que hacemos.
+          </p>
+          <button className="bg-green-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-green-700 transition duration-300">
+            Únete a Yolná
+          </button>
+        </div>
+      </section>
+      {/* --- FIN DE LA  SECCIÓN --- */}
 
       
       {/* Aquí insertamos el acordeón FAQ */}
@@ -479,20 +492,7 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
 
 
 
-      {/* --- SECCIÓN: Valores de Yolná --- */}
-      <section className="py-16 bg-white px-4 text-gray-700 text-center">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-green-600 mb-4">¡En Yolná, esto es lo que nos mueve!</h2>
-          <p className="max-w-xl mx-auto text-lg leading-relaxed mb-8">
-            Los valores de Yolná representan aquello en lo que creemos y cómo elegimos desarrollar nuestra actividad. Son los principios que rigen todo lo que hacemos.
-          </p>
-          <button className="bg-green-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-green-700 transition duration-300">
-            Únete a Yolná
-          </button>
-        </div>
-      </section>
-      {/* --- FIN DE LA  SECCIÓN --- */}
-
+      
 
 
 
