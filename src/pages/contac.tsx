@@ -241,7 +241,7 @@ export const Contac = () => {
               <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-600 transition-colors duration-300">
                 <FaFacebookF className="h-8 w-8" />
               </a>
-              <a href="https://wa.me/521234567890" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-600 transition-colors duration-300">
+              <a href="https://wa.me/2212128396" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-600 transition-colors duration-300">
                 <FaWhatsapp className="h-8 w-8" />
               </a>
               <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-600 transition-colors duration-300">

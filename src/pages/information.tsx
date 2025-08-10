@@ -189,13 +189,14 @@ export const Information = () => {
         </div>
       </section>
 
+
 <section
         id="acachul-sano"
         className="bg-gray-100 py-16 text-center px-4"
       >
         <h2 className="text-4xl font-bold mb-4 text-gray-800">¿Cómo saber si tu Acachul esta sano?</h2>
         <p className="max-w-xl mx-auto text-gray-600 text-justify">
-            El acachul es una planta silvestre de gran importancia ecológica y cultural. Nuestro sistema permite conocer más sobre su estado y cuidado. El acachul es una planta silvestre nativa que desempeña un papel fundamental en los ecosistemas locales, aportando alimento y refugio a diversas especies. Su importancia cultural radica en su uso tradicional por comunidades indígenas para medicinas y rituales.
+            El acachul es una planta silvestre de gran importancia ecológica y cultural. Nuestro sistema permite conocer más sobre su estado y cuidado. El acachul es una planta silvestre nativa que desempeña un papel fundamental en los ecosistemas locales, aportando alimento y refugio a diversas especies. Su importancia cultural radica en su uso tradicional por comunidades indígenas para medicinas, rituales y preparaciones gastronómicas que forman parte de su identidad. Además, sus frutos, ricos en nutrientes y antioxidantes, no solo son un recurso alimenticio valioso, sino también un elemento que conecta a las personas con su entorno natural. Conocer y proteger el acachul es contribuir a la conservación de la biodiversidad y al fortalecimiento de las tradiciones que lo han mantenido vivo por generaciones.
         </p>
         <p className="max-w-xl mx-auto text-gray-600 text-left mt-4 mb-4">
             Para saber si tu acachul está sano, observa las siguientes señales:
@@ -207,7 +208,7 @@ export const Information = () => {
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Hojas verdes y vibrantes
                 </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4 border-4 border-green-600">
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
                     <img src="/Imagenes/1.jpeg" alt="Hojas verdes" className="w-full h-full object-cover" />
                 </div>
             </div>
@@ -216,7 +217,7 @@ export const Information = () => {
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Tallo fuerte y sin manchas
                 </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4 border-4 border-green-600">
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
                     <img src="/Imagenes/2.jpeg" alt="Tallo sano" className="w-full h-full object-cover" />
                 </div>
             </div>
@@ -225,14 +226,14 @@ export const Information = () => {
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Presencia de flores y frutos
                 </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4 border-4 border-green-600">
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
                     <img src="/Imagenes/3.jpeg" alt="Flores y frutos" className="w-full h-full object-cover" />
                 </div>
             </div>
         </div>
       </section>
 
-      
+
 
       {/* --- Seccion con formato  para tomar fotos --- */}
       <section id="como-tomar-foto" className="py-16 bg-white px-4">
@@ -454,14 +455,14 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
         <FAQAccordion faqs={faqs} />
       </section>
 
-      {/* Sección de "Próximamente en Yolná" actualizada e interactiva */}
-      <section className="py-16 text-center bg-green-50">
+     {/* Sección de "Próximamente en Yolná" actualizada e interactiva */}
+      <section className="py-16 text-center bg-white">
         <h2 className="text-xl font-bold mb-10">Próximamente en Yolná</h2>
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
           {upcomingFeatures.map((item, i) => (
             <div
               key={i}
-              className="rounded-2xl p-3 shadow-md bg-white/50 border border-gray-300 cursor-pointer transition hover:shadow-lg backdrop-blur-sm flex flex-col items-center"
+              className="rounded-2xl p-3 shadow-md bg-green-100 border border-gray-300 cursor-pointer transition hover:shadow-lg backdrop-blur-sm flex flex-col items-center"
               onClick={() => openModal(item.image)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -485,9 +486,6 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
           ))}
         </div>
       </section>
-
-      
-
 
 
 
