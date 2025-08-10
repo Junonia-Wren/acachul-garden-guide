@@ -106,17 +106,17 @@ export const Information = () => {
     {
       step: "Paso 1",
       text: "Descarga la aplicación",
-      image: "/Imagenes/paso1.png", // Corregido para usar una ruta local
+      image: "/Imagenes/4.jpeg", 
     },
     {
       step: "Paso 2",
       text: "Registra tu planta",
-      image: "/Imagenes/paso2.png", // Corregido para usar una ruta local
+      image: "/Imagenes/5.jpeg", 
     },
     {
       step: "Paso 3",
       text: "Monitorea en tiempo real",
-      image: "/Imagenes/paso3.png", // Corregido para usar una ruta local
+      image: "/Imagenes/6.jpeg", 
     },
   ];
 
@@ -201,37 +201,36 @@ export const Information = () => {
             Para saber si tu acachul está sano, observa las siguientes señales:
         </p>
 
-        {/* Contenedor para imágenes */}
+        {/* Contenedor para imágenes al estilo de la primera captura */}
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
+            <div className="bg-green-100 rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Hojas verdes y vibrantes
                 </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4 border-4 border-green-600">
                     <img src="/Imagenes/1.jpeg" alt="Hojas verdes" className="w-full h-full object-cover" />
                 </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
+            <div className="bg-green-100 rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Tallo fuerte y sin manchas
                 </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4 border-4 border-green-600">
                     <img src="/Imagenes/2.jpeg" alt="Tallo sano" className="w-full h-full object-cover" />
                 </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
+            <div className="bg-green-100 rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Presencia de flores y frutos
                 </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4 border-4 border-green-600">
                     <img src="/Imagenes/3.jpeg" alt="Flores y frutos" className="w-full h-full object-cover" />
                 </div>
             </div>
         </div>
       </section>
-
 
       
 
@@ -431,9 +430,6 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
       {/* --- FIN DE LA  SECCIÓN --- */}
 
 
-
-
-
   
 
       
@@ -458,8 +454,8 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
         <FAQAccordion faqs={faqs} />
       </section>
 
-      {/* Sección de "Próximamente en Yolná"  */}
-      <section className="py-16 text-center bg-white">
+      {/* Sección de "Próximamente en Yolná" actualizada e interactiva */}
+      <section className="py-16 text-center bg-green-50">
         <h2 className="text-xl font-bold mb-10">Próximamente en Yolná</h2>
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
           {upcomingFeatures.map((item, i) => (
@@ -489,8 +485,6 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
           ))}
         </div>
       </section>
-
-
 
       
 
