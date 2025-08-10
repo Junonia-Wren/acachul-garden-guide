@@ -2,29 +2,115 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Leaf, Camera, BarChart3, MessageSquare } from "lucide-react";
+import React, { useState } from "react";
 
-
-
-
-import React from 'react';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react'; // Importamos iconos de lucide-react
 import { FaFacebookF, FaWhatsapp, FaInstagram, FaTiktok } from 'react-icons/fa'; // Importamos iconos de redes sociales
 
-export const Contac = () => {
+// Componente FAQ Accordion separado
+type FAQItem = {
+  pregunta: string;
+  respuesta: string;
+};
+
+type FAQAccordionProps = {
+  faqs: FAQItem[];
+};
+
+const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
-    <div className="min-h-screen font-sans bg-white">
-      {/* Sección 1: Encabezado con imagen de fondo y texto */}
-      <section 
-        className="relative h-96 bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/Imagenes/contact-header.jpg')" }}
+    <div className="max-w-4xl mx-auto space-y-4">
+      {faqs.map((faq, i) => (
+        <div
+          key={i}
+          className="bg-white p-4 rounded-xl shadow-md text-left cursor-pointer"
+          onClick={() => toggleFAQ(i)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggleFAQ(i);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          aria-expanded={openIndex === i}
+          aria-controls={`faq-answer-${i}`}
+          id={`faq-question-${i}`}
+        >
+          <p className="font-bold text-green-700 flex justify-between items-center">
+            {faq.pregunta}
+            <span className="ml-2">{openIndex === i ? "−" : "+"}</span>
+          </p>
+          {openIndex === i && (
+            <p
+              className="text-gray-600 mt-2"
+              id={`faq-answer-${i}`}
+              aria-labelledby={`faq-question-${i}`}
+            >
+              {faq.respuesta}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+export const Contac = () => {
+    const faqs: FAQItem[] = [
+    {
+      pregunta: "¿Quién puede usar Yolná?",
+      respuesta:
+        "Cualquier persona interesada en monitorear y cuidar su planta de acachul puede usar Yolná, desde agricultores hasta aficionados y comunidades locales.",
+    },
+    {
+      pregunta: "¿Cómo puedo subir una foto de mi planta?",
+      respuesta:
+        " Puedes subir una foto directamente desde la sección de monitoreo en la aplicación o página web, simplemente selecciona la opción 'Subir imagen' y elige una foto clara y nítida de tu planta..",
+    },
+    {
+      pregunta: "¿Yolná tiene algún costo?",
+      respuesta:
+        "El servicio básico de Yolná es gratuito.",
+    },
+    {
+      pregunta: "¿Qué tipo de información recibe el usuario tras subir una foto?",
+      respuesta:
+        "Tras subir la imagen, Yolná analiza la salud de la planta usando inteligencia artificial y proporciona un diagnóstico detallado junto con recomendaciones personalizadas para su cuidado.",
+    },
+     {
+      pregunta: "¿Cómo protege Yolná mis datos personales y las imágenes que subo?",
+      respuesta:
+        "Yolná cumple con las normas de privacidad y seguridad, garantizando que tus datos y fotos sean usados únicamente para el monitoreo y no serán compartidos con terceros sin tu consentimiento.",
+    },
+
+
+
+
+  ];
+
+  return (
+    <div className="min-h-screen font-sans bg-gray-100">
+      <section
+        className="relative h-80 bg-cover bg-center flex items-center justify-center"
+        style={{
+          backgroundImage: "url('/Imagenes/18.png')",
+        }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
-        <div className="relative z-50 text-center">
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative z-10">
           <h1 className="text-3xl md:text-5xl font-bold text-white tracking-widest">
             CONTACTO
           </h1>
         </div>
       </section>
+
+ 
 
       {/* Sección 2: Mensaje principal */}
       <section className="py-20 text-center">
@@ -168,6 +254,67 @@ export const Contac = () => {
           </div>
         </div>
       </section>
+
+ {/* Sección de la galería */}
+      <section className="py-12 bg-gray-100 text-center">
+        <h2 className="text-xl font-bold mb-8">Galería</h2>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+          {/* Imagen 1 */}
+          <div className="rounded-md overflow-hidden shadow-md">
+            <img
+              src="/Imagenes/7.jpeg" // Reemplaza 
+              alt="Imagen de galería 1"
+              className="w-full h-auto object-cover"
+              style={{ aspectRatio: '4 / 3' }}
+            />
+          </div>
+          {/* Imagen 2 */}
+          <div className="rounded-md overflow-hidden shadow-md">
+            <img
+              src="/Imagenes/2.jpeg" // Reemplaza 
+              alt="Imagen de galería 2"
+              className="w-full h-auto object-cover"
+              style={{ aspectRatio: '4 / 3' }}
+            />
+          </div>
+          {/* Imagen 3 */}
+          <div className="rounded-md overflow-hidden shadow-md md:row-span-2">
+            <img
+              src="/Imagenes/20.jpeg" // Reemplaza 
+              alt="Imagen de galería 3"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          {/* Imagen 4 */}
+          <div className="rounded-md overflow-hidden shadow-md">
+            <img
+              src="/Imagenes/10.png" // Reemplaza 
+              alt="Imagen de galería 4"
+              className="w-full h-auto object-cover"
+              style={{ aspectRatio: '4 / 3' }}
+            />
+          </div>
+          {/* Imagen 5 */}
+          <div className="rounded-md overflow-hidden shadow-md">
+            <img
+              src="/Imagenes/14.png" // Reemplaza 
+              alt="Imagen de galería 5"
+              className="w-full h-auto object-cover"
+              style={{ aspectRatio: '4 / 3' }}
+            />
+          </div>
+        </div>
+      </section>
+
+
+{/* Aquí insertamos el acordeón FAQ */}
+      <section className="bg-green-50 py-12 px-4">
+        <h2 className="text-xl font-bold mb-8 text-center">Preguntas Frecuentes</h2>
+        <FAQAccordion faqs={faqs} />
+      </section>
+
+
+
     </div>
   );
 };
