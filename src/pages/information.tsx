@@ -106,17 +106,17 @@ export const Information = () => {
     {
       step: "Paso 1",
       text: "Descarga la aplicación",
-      image: "/Imagenes/4.jpeg", 
+      image: "/Imagenes/paso1.png", // Corregido para usar una ruta local
     },
     {
       step: "Paso 2",
       text: "Registra tu planta",
-      image: "/Imagenes/5.jpeg", 
+      image: "/Imagenes/paso2.png", // Corregido para usar una ruta local
     },
     {
       step: "Paso 3",
       text: "Monitorea en tiempo real",
-      image: "/Imagenes/14.png", 
+      image: "/Imagenes/paso3.png", // Corregido para usar una ruta local
     },
   ];
 
@@ -146,7 +146,7 @@ export const Information = () => {
             <p className="text-lg font-medium text-gray-700 mb-6">
               ¿Cómo saber si tu acachul está sano?
             </p>
-            <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
+            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-green-600">
               <img
                 src="/Imagenes/10.png"
                 alt="Acachul sano"
@@ -162,7 +162,7 @@ export const Information = () => {
             <p className="text-lg font-medium text-gray-700 mb-6">
               ¿Cómo tomar una buena foto?
             </p>
-            <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
+            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-green-600">
               <img
                 src="/Imagenes/16.jpg"
                 alt="Tomar foto"
@@ -178,7 +178,7 @@ export const Information = () => {
             <p className="text-lg font-medium text-gray-700 mb-6">
               Guía básica de cuidados
             </p>
-            <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
+            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-green-600">
               <img
                 src="/Imagenes/4.jpeg"
                 alt="Guía de cuidados"
@@ -188,6 +188,134 @@ export const Information = () => {
           </a>
         </div>
       </section>
+
+<section
+        id="acachul-sano"
+        className="bg-gray-100 py-16 text-center px-4"
+      >
+        <h2 className="text-4xl font-bold mb-4 text-gray-800">¿Cómo saber si tu Acachul esta sano?</h2>
+        <p className="max-w-xl mx-auto text-gray-600 text-justify">
+            El acachul es una planta silvestre de gran importancia ecológica y cultural. Nuestro sistema permite conocer más sobre su estado y cuidado. El acachul es una planta silvestre nativa que desempeña un papel fundamental en los ecosistemas locales, aportando alimento y refugio a diversas especies. Su importancia cultural radica en su uso tradicional por comunidades indígenas para medicinas y rituales.
+        </p>
+        <p className="max-w-xl mx-auto text-gray-600 text-left mt-4 mb-4">
+            Para saber si tu acachul está sano, observa las siguientes señales:
+        </p>
+
+        {/* Contenedor para imágenes */}
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
+                <p className="text-lg font-medium text-gray-700 mb-6">
+                    Hojas verdes y vibrantes
+                </p>
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
+                    <img src="/Imagenes/1.jpeg" alt="Hojas verdes" className="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
+                <p className="text-lg font-medium text-gray-700 mb-6">
+                    Tallo fuerte y sin manchas
+                </p>
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
+                    <img src="/Imagenes/2.jpeg" alt="Tallo sano" className="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
+                <p className="text-lg font-medium text-gray-700 mb-6">
+                    Presencia de flores y frutos
+                </p>
+                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
+                    <img src="/Imagenes/3.jpeg" alt="Flores y frutos" className="w-full h-full object-cover" />
+                </div>
+            </div>
+        </div>
+      </section>
+
+
+      
+
+      {/* --- Seccion con formato  para tomar fotos --- */}
+      <section id="como-tomar-foto" className="py-16 bg-white px-4">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="text-gray-700 text-lg leading-relaxed text-justify md:order-2">
+            <h2 className="text-4xl font-bold text-green-600 mb-4">Toma fotos claras y efectivas</h2>
+            <p className="mb-4">
+              Para un diagnóstico acertado, asegúrate de que la foto tenga buena iluminación, enfoque la planta completa y evita que haya objetos que la tapen.
+            </p>
+            <p>
+              ¡Así Yolná podrá darte recomendaciones precisas para cuidar mejor tus plantas!
+            </p>
+          </div>
+          <div className="md:order-1">
+            <div className="rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="/Imagenes/16.jpg"
+                alt="Persona tomando una foto de una planta"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="mt-2 text-sm text-gray-500 text-center">
+              Ejemplo de cómo tomar una foto para el diagnóstico.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+
+<section id="guia-cuidados" className="py-16 bg-white px-4">
+        <h2 className="text-2xl font-bold mb-10 text-center">
+          Guía básica de cuidados del Acachul
+        </h2>
+
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {/* Paso 1 */}
+          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
+            <img
+              src="/Imagenes/19.png"
+              alt="Riego"
+              className="w-16 h-16 mb-4"
+            />
+            <h3 className="font-semibold text-lg mb-2">Riego adecuado</h3>
+            <p className="text-gray-700 text-sm">
+              Mantén la tierra húmeda pero no encharcada. Riega moderadamente,
+              especialmente en temporada seca.
+            </p>
+          </div>
+
+          {/* Paso 2 */}
+          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
+            <img
+              src="/Imagenes/9.jpeg"
+              alt="Luz solar"
+              className="w-16 h-16 mb-4"
+            />
+            <h3 className="font-semibold text-lg mb-2">Luz indirecta</h3>
+            <p className="text-gray-700 text-sm">
+              Coloca el acachul en un lugar con luz indirecta o sombra parcial para
+              evitar que sus hojas se quemen.
+            </p>
+          </div>
+
+          {/* Paso 3 */}
+          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
+            <img
+              src="/Imagenes/4.jpeg"
+              alt="Sustrato"
+              className="w-16 h-16 mb-4"
+            />
+            <h3 className="font-semibold text-lg mb-2">Sustrato y fertilización</h3>
+            <p className="text-gray-700 text-sm">
+              Usa un sustrato bien drenado y fertiliza cada 2-3 meses con abono
+              orgánico para promover un buen crecimiento.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+
 
 
 <section className="py-12 bg-gray-100 text-center">
@@ -308,129 +436,9 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
 
   
 
-      <section
-        id="acachul-sano"
-        className="bg-gray-100 py-16 text-center px-4"
-      >
-        <h2 className="text-4xl font-bold mb-4 text-gray-800">¿Cómo saber si tu Acachul esta sano?</h2>
-        <p className="max-w-xl mx-auto text-gray-600 text-justify">
-            El acachul es una planta silvestre de gran importancia ecológica y cultural. Nuestro sistema permite conocer más sobre su estado y cuidado. El acachul es una planta silvestre nativa que desempeña un papel fundamental en los ecosistemas locales, aportando alimento y refugio a diversas especies. Su importancia cultural radica en su uso tradicional por comunidades indígenas para medicinas y rituales.
-        </p>
-        <p className="max-w-xl mx-auto text-gray-600 text-left mt-4 mb-4">
-            Para saber si tu acachul está sano, observa las siguientes señales:
-        </p>
-
-        {/* Contenedor para imágenes */}
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
-                <p className="text-lg font-medium text-gray-700 mb-6">
-                    Hojas verdes y vibrantes
-                </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
-                    <img src="/Imagenes/1.jpeg" alt="Hojas verdes" className="w-full h-full object-cover" />
-                </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
-                <p className="text-lg font-medium text-gray-700 mb-6">
-                    Tallo fuerte y sin manchas
-                </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
-                    <img src="/Imagenes/2.jpeg" alt="Tallo sano" className="w-full h-full object-cover" />
-                </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition">
-                <p className="text-lg font-medium text-gray-700 mb-6">
-                    Presencia de flores y frutos
-                </p>
-                <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
-                    <img src="/Imagenes/3.jpeg" alt="Flores y frutos" className="w-full h-full object-cover" />
-                </div>
-            </div>
-        </div>
-      </section>
-
-
       
 
-      {/* --- Seccion con formato  para tomar fotos --- */}
-      <section id="como-tomar-foto" className="py-16 bg-white px-4">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="text-gray-700 text-lg leading-relaxed text-justify md:order-2">
-            <h2 className="text-4xl font-bold text-green-600 mb-4">Toma fotos claras y efectivas</h2>
-            <p className="mb-4">
-              Para un diagnóstico acertado, asegúrate de que la foto tenga buena iluminación, enfoque la planta completa y evita que haya objetos que la tapen.
-            </p>
-            <p>
-              ¡Así Yolná podrá darte recomendaciones precisas para cuidar mejor tus plantas!
-            </p>
-          </div>
-          <div className="md:order-1">
-            <div className="rounded-2xl overflow-hidden shadow-xl">
-              <img 
-                src="/Imagenes/16.jpg"
-                alt="Persona tomando una foto de una planta"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p className="mt-2 text-sm text-gray-500 text-center">
-              Ejemplo de cómo tomar una foto para el diagnóstico.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="guia-cuidados" className="py-16 bg-white px-4">
-        <h2 className="text-2xl font-bold mb-10 text-center">
-          Guía básica de cuidados del Acachul
-        </h2>
-
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {/* Paso 1 */}
-          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
-            <img
-              src="/Imagenes/19.png"
-              alt="Riego"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="font-semibold text-lg mb-2">Riego adecuado</h3>
-            <p className="text-gray-700 text-sm">
-              Mantén la tierra húmeda pero no encharcada. Riega moderadamente,
-              especialmente en temporada seca.
-            </p>
-          </div>
-
-          {/* Paso 2 */}
-          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
-            <img
-              src="/Imagenes/9.jpeg"
-              alt="Luz solar"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="font-semibold text-lg mb-2">Luz indirecta</h3>
-            <p className="text-gray-700 text-sm">
-              Coloca el acachul en un lugar con luz indirecta o sombra parcial para
-              evitar que sus hojas se quemen.
-            </p>
-          </div>
-
-          {/* Paso 3 */}
-          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
-            <img
-              src="/Imagenes/4.jpeg"
-              alt="Sustrato"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="font-semibold text-lg mb-2">Sustrato y fertilización</h3>
-            <p className="text-gray-700 text-sm">
-              Usa un sustrato bien drenado y fertiliza cada 2-3 meses con abono
-              orgánico para promover un buen crecimiento.
-            </p>
-          </div>
-        </div>
-      </section>
-
+      
       {/* Aquí insertamos el acordeón FAQ */}
       <section className="bg-green-50 py-12 px-4">
         <h2 className="text-xl font-bold mb-8 text-center">Preguntas Frecuentes</h2>
