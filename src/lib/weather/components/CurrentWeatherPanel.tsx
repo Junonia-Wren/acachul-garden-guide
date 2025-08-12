@@ -43,10 +43,9 @@ export default function CurrentWeatherPanel() {
 
       {/* Descripción general */}
       <div>
-        <p className="text-gray-700">
-          Se esperan tormentas eléctricas fuertes. Una temperatura máxima de 28° en un día húmedo.
-        </p>
+        <p className="text-gray-700">{weather.plantCareTip}</p>
       </div>
+
 
       {/* Métricas detalladas */}
       <div className="grid grid-cols-5 gap-4 text-center">

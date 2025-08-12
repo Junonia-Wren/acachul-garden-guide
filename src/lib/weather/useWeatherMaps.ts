@@ -1,34 +1,58 @@
 // src/lib/weather/useWeatherMaps.ts
-import { useMemo } from "react";
 
-const BASE_URL = "https://tile.openweathermap.org/map";
-const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+import { useEffect, useState } from "react";
 
-interface UseWeatherMapTileProps {
-  lat: number;
-  lon: number;
+export type WeatherLayer =
+  | "temp_new"
+  | "clouds_new"
+  | "precipitation_new"
+  | "wind_new";
+
+export interface UseWeatherMapTileOptions {
   zoom?: number;
-  layer?: "temp_new" | "clouds_new" | "precipitation_new" | "wind_new";
+  layer?: WeatherLayer;
 }
 
+const DEFAULT_COORDS = {
+  lat: 20.2770,
+  lon: -97.9611
+};
+
 export const useWeatherMapTile = ({
-  lat,
-  lon,
   zoom = 5,
   layer = "temp_new",
-}: UseWeatherMapTileProps): string => {
-  const tileUrl = useMemo(() => {
-    const tileX = Math.floor(((lon + 180) / 360) * Math.pow(2, zoom));
-    const tileY = Math.floor(
-      ((1 -
-        Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) /
-          Math.PI) /
-        2) *
-        Math.pow(2, zoom)
+}: UseWeatherMapTileOptions = {}) => {
+  const [lat, setLat] = useState<number>(DEFAULT_COORDS.lat);
+  const [lon, setLon] = useState<number>(DEFAULT_COORDS.lon);
+  const [currentLayer, setLayer] = useState<WeatherLayer>(layer);
+  const [currentZoom, setZoom] = useState<number>(zoom);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setError("Geolocalización no soportada");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLat(position.coords.latitude);
+        setLon(position.coords.longitude);
+      },
+      (err) => {
+        console.error("Error al obtener ubicación:", err);
+        setError("No se pudo obtener la ubicación. Usando ubicación por defecto.");
+      }
     );
+  }, []);
 
-    return `${BASE_URL}/${layer}/${zoom}/${tileX}/${tileY}.png?appid=${API_KEY}`;
-  }, [lat, lon, zoom, layer]);
-
-  return tileUrl;
+  return {
+    lat,
+    lon,
+    zoom: currentZoom,
+    layer: currentLayer,
+    setLayer,
+    setZoom,
+    error,
+  };
 };

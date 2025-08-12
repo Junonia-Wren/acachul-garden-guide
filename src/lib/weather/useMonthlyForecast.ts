@@ -1,98 +1,195 @@
+// src/lib/weather/useMonthlyForecast.ts
 import { useEffect, useState } from "react";
-import { openWeatherClient } from "./openWeatherClient";
-import {
-  kelvinToCelsius,
-  formatDate,
-  capitalizeFirstLetter,
-  getWeatherIconUrl,
-} from "./weatherUtils";
 
-interface DailySummary {
-  date: string;
-  averageTemp: number;
-  minTemp: number;
-  maxTemp: number;
+export interface MonthlyDayData {
+  day: number;
+  weekday: string;
   icon: string;
-  description: string;
+  maxTemp: number;
+  rainChance: number;
 }
 
-interface ForecastItem {
-  dt: number;
-  main: {
-    temp: number;
-    temp_min: number;
-    temp_max: number;
-  };
-  weather: {
-    description: string;
-    icon: string;
-  }[];
+interface UseMonthlyForecastReturn {
+  loading: boolean;
+  error: string | null;
+  days: MonthlyDayData[];
 }
 
-interface ForecastResponse {
-  list: ForecastItem[];
+const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+const possibleIcons = [
+  "01d", "02d", "03d", "04d", "09d", "10d", "11d", /*"13d",*/ "50d",
+];
+
+function getRandomIcon(): string {
+  const idx = Math.floor(Math.random() * possibleIcons.length);
+  return possibleIcons[idx];
 }
 
-export const useMonthlyForecast = (lat: number, lon: number) => {
-  const [forecast, setForecast] = useState<DailySummary[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+function generateBaseMonthData(
+  year: number,
+  month: number,
+  minTemp = 21,
+  maxTemp = 29
+): MonthlyDayData[] {
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const out: MonthlyDayData[] = [];
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dt = new Date(year, month, d);
+    const weekday = WEEKDAYS[dt.getDay()];
+    out.push({
+      day: d,
+      weekday,
+      icon: getRandomIcon(),
+      maxTemp: Math.round(minTemp + Math.random() * (maxTemp - minTemp)),
+      rainChance: Math.round(Math.random() * 60),
+    });
+  }
+
+  return out;
+}
+
+// Tipos para la respuesta del forecast 3h OpenWeather
+interface Forecast3hWeather {
+  icon: string;
+}
+
+interface Forecast3hMain {
+  temp_max: number;
+  temp: number;
+}
+
+interface Forecast3hItem {
+  dt: number; // timestamp unix
+  main: Forecast3hMain;
+  weather: Forecast3hWeather[];
+  pop?: number; // probabilidad precipitación 0..1
+}
+
+interface Forecast3hResponse {
+  list: Forecast3hItem[];
+}
+
+export function useMonthlyForecast(
+  minTempBase = 15,
+  maxTempBase = 35
+): UseMonthlyForecastReturn {
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [days, setDays] = useState<MonthlyDayData[]>([]);
 
   useEffect(() => {
-    const fetchForecast = async () => {
+    let mounted = true;
+
+    function getCoords(): Promise<{ lat: number; lon: number }> {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error("Geolocalización no soportada"));
+        } else {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+            (err) => reject(err)
+          );
+        }
+      });
+    }
+
+    async function fetchData(lat: number, lon: number) {
+      setLoading(true);
+      setError(null);
+
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+
+      const base = generateBaseMonthData(year, month, minTempBase, maxTempBase);
+
       try {
-        setLoading(true);
+        const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY as string | undefined;
+        if (!apiKey) {
+          throw new Error("Falta VITE_OPENWEATHER_API_KEY en las variables de entorno");
+        }
 
-        const response = await openWeatherClient.get<ForecastResponse>("/forecast", {
-          params: {
-            lat,
-            lon,
-            lang: "es",
-          },
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}&lang=es`;
+        const res = await fetch(url);
+
+        if (!res.ok) {
+          throw new Error(`API respondió con ${res.status}`);
+        }
+
+        const data = (await res.json()) as Forecast3hResponse;
+
+        if (!data.list || !Array.isArray(data.list)) {
+          throw new Error("Datos inesperados de la API");
+        }
+
+        const dayMap = new Map<number, MonthlyDayData>();
+
+        data.list.forEach((item) => {
+          const dt = new Date(item.dt * 1000);
+          if (dt.getFullYear() !== year || dt.getMonth() !== month) return;
+
+          const day = dt.getDate();
+
+          const temp = item.main.temp_max ?? item.main.temp;
+          if (temp === undefined) return;
+
+          const pop = item.pop !== undefined ? Math.round(item.pop * 100) : 0;
+
+          const icon = item.weather?.[0]?.icon ?? "01d";
+
+          const prev = dayMap.get(day);
+          if (!prev) {
+            dayMap.set(day, {
+              day,
+              weekday: WEEKDAYS[dt.getDay()],
+              icon,
+              maxTemp: Math.round(temp),
+              rainChance: pop,
+            });
+          } else {
+            if (Math.round(temp) > prev.maxTemp) prev.maxTemp = Math.round(temp);
+            if (pop > prev.rainChance) prev.rainChance = pop;
+          }
         });
 
-        const groupedData: { [date: string]: ForecastItem[] } = {};
-
-        // Agrupar por fecha (sin hora)
-        response.data.list.forEach((item) => {
-          const date = formatDate(item.dt);
-          if (!groupedData[date]) groupedData[date] = [];
-          groupedData[date].push(item);
+        const finalDays = base.map((d) => {
+          if (dayMap.has(d.day)) {
+            return dayMap.get(d.day)!;
+          }
+          return d;
         });
 
-        // Resumir por día
-        const summaries: DailySummary[] = Object.entries(groupedData).map(([date, items]) => {
-          const temps = items.map((i) => kelvinToCelsius(i.main.temp));
-          const minTemps = items.map((i) => kelvinToCelsius(i.main.temp_min));
-          const maxTemps = items.map((i) => kelvinToCelsius(i.main.temp_max));
-
-          const averageTemp = Math.round(temps.reduce((a, b) => a + b, 0) / temps.length);
-          const minTemp = Math.min(...minTemps);
-          const maxTemp = Math.max(...maxTemps);
-
-          const { icon, description } = items[Math.floor(items.length / 2)].weather[0];
-
-          return {
-            date,
-            averageTemp,
-            minTemp,
-            maxTemp,
-            icon: getWeatherIconUrl(icon),
-            description: capitalizeFirstLetter(description),
-          };
-        });
-
-        setForecast(summaries);
+        if (mounted) {
+          setDays(finalDays);
+          setError(null);
+        }
       } catch (err) {
-        setError("Error al obtener el pronóstico mensual.");
-        console.error(err);
+        if (mounted) {
+          setDays(base);
+          setError(err instanceof Error ? err.message : String(err));
+        }
       } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
       }
+    }
+
+    getCoords()
+      .then(({ lat, lon }) => fetchData(lat, lon))
+      .catch((err) => {
+        if (mounted) {
+          setError(err instanceof Error ? err.message : String(err));
+          const today = new Date();
+          setDays(generateBaseMonthData(today.getFullYear(), today.getMonth(), minTempBase, maxTempBase));
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      mounted = false;
     };
+  }, [minTempBase, maxTempBase]);
 
-    fetchForecast();
-  }, [lat, lon]);
-
-  return { forecast, loading, error };
-};
+  return { loading, error, days };
+}

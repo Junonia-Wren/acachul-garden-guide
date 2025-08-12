@@ -172,3 +172,12 @@ export function getDaySummaries(
     };
   });
 }
+
+export function getHourFromDtTxt(dt_txt: string): string {
+  // Espera formato tipo: "2025-08-01 03:00:00"
+  const timePart = dt_txt.split(" ")[1]; // "03:00:00"
+  const hour = parseInt(timePart.split(":")[0]); // 3
+  const period = hour >= 12 ? "PM" : "AM";
+  const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+  return `${hour12} ${period}`;
+}
