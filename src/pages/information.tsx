@@ -141,12 +141,12 @@ export const Information = () => {
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
           <a
             href="#acachul-sano"
-            className="bg-green-50 rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition"
+            className="bg-white rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition"
           >
             <p className="text-lg font-medium text-gray-700 mb-6">
               ¿Cómo saber si tu acachul está sano?
             </p>
-            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-green-600">
+            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-green-600">
               <img
                 src="/Imagenes/10.png"
                 alt="Acachul sano"
@@ -157,12 +157,12 @@ export const Information = () => {
 
           <a
             href="#como-tomar-foto"
-            className="bg-green-50 rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition"
+            className="bg-white rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition"
           >
             <p className="text-lg font-medium text-gray-700 mb-6">
               ¿Cómo tomar una buena foto?
             </p>
-            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-green-600">
+            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-green-600">
               <img
                 src="/Imagenes/16.jpg"
                 alt="Tomar foto"
@@ -173,12 +173,12 @@ export const Information = () => {
 
           <a
             href="#guia-cuidados"
-            className="bg-green-50 rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition"
+            className="bg-white rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer hover:shadow-xl transition"
           >
             <p className="text-lg font-medium text-gray-700 mb-6">
               Guía básica de cuidados
             </p>
-            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-green-600">
+            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-green-600">
               <img
                 src="/Imagenes/4.jpeg"
                 alt="Guía de cuidados"
@@ -204,7 +204,7 @@ export const Information = () => {
 
         {/* Contenedor para imágenes al estilo de la primera captura */}
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-            <div className="bg-green-100 rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
+            <div className="bg-primary-light rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Hojas verdes y vibrantes
                 </p>
@@ -213,7 +213,7 @@ export const Information = () => {
                 </div>
             </div>
 
-            <div className="bg-green-100 rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
+            <div className="bg-accent/10 rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Tallo fuerte y sin manchas
                 </p>
@@ -222,7 +222,7 @@ export const Information = () => {
                 </div>
             </div>
 
-            <div className="bg-green-100 rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
+            <div className="bg-muted rounded-2xl border border-gray-200 p-4 flex flex-col items-center text-center">
                 <p className="text-lg font-medium text-gray-700 mb-6">
                     Presencia de flores y frutos
                 </p>
@@ -288,7 +288,7 @@ export const Information = () => {
       <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
         <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
-            src="/Imagenes/f3git .png"
+            src="/Imagenes/f3.png"
             alt="Paso 4: Sube la foto y los datos"
             className="w-full h-full object-cover"
           />
@@ -379,7 +379,7 @@ export const Information = () => {
     </p>
   </div>
 </section>
-<section className="py-12 bg-gray-100 text-center">
+<section className="py-12 bg-accent/10 text-center">
         <h2 className="text-3xl font-bold mb-10"><span className="text-black">Todo sobre el </span><span className="text-green-600">acachul</span></h2>
 
         <div className="grid grid-cols-3 gap-1 max-w-4xl mx-auto px-4">
