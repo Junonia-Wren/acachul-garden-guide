@@ -263,7 +263,7 @@ export const Contac = () => {
     {/* Imagen 1 */}
     <div className="rounded-md overflow-hidden shadow-md">
       <img
-        src="/Imagenes/8.jpeg"
+        src="/Imagenes/16.png"
         alt="Imagen de galería 1"
         className="w-full h-64 object-cover"
       />
@@ -271,7 +271,7 @@ export const Contac = () => {
     {/* Imagen 2 */}
     <div className="rounded-md overflow-hidden shadow-md">
       <img
-        src="/Imagenes/2.jpeg"
+        src="/Imagenes/7.png"
         alt="Imagen de galería 2"
         className="w-full h-64 object-cover"
       />
@@ -279,7 +279,7 @@ export const Contac = () => {
     {/* Imagen 3 (más alta en pantallas grandes) */}
     <div className="rounded-md overflow-hidden shadow-md md:row-span-2">
       <img
-        src="/Imagenes/20.jpeg"
+        src="/Imagenes/25.png"
         alt="Imagen de galería 3"
         className="w-full h-full md:h-[532px] object-cover"
       />
@@ -287,7 +287,7 @@ export const Contac = () => {
     {/* Imagen 4 */}
     <div className="rounded-md overflow-hidden shadow-md">
       <img
-        src="/Imagenes/1.png"
+        src="/Imagenes/23.png"
         alt="Imagen de galería 4"
         className="w-full h-64 object-cover"
       />
@@ -295,7 +295,7 @@ export const Contac = () => {
     {/* Imagen 5 */}
     <div className="rounded-md overflow-hidden shadow-md">
       <img
-        src="/Imagenes/14.png"
+        src="/Imagenes/18.png"
         alt="Imagen de galería 5"
         className="w-full h-64 object-cover"
       />

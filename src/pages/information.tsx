@@ -288,7 +288,7 @@ export const Information = () => {
       <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
         <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
-            src="/Imagenes/f3.png"
+            src="/Imagenes/f3git .png"
             alt="Paso 4: Sube la foto y los datos"
             className="w-full h-full object-cover"
           />
@@ -513,11 +513,7 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
       {/* --- FIN DE LA  SECCIÓN --- */}
 
       
-      {/* Aquí insertamos el acordeón FAQ */}
-      <section className="bg-green-50 py-12 px-4">
-        <h2 className="text-xl font-bold mb-8 text-center">Preguntas Frecuentes</h2>
-        <FAQAccordion faqs={faqs} />
-      </section>
+      
 
      {/* Sección de "Próximamente en Yolná" actualizada e interactiva */}
       <section className="py-16 text-center bg-white">
