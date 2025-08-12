@@ -16,6 +16,7 @@ import{ Contac} from "./pages/contac";
 import { PrivateRoute } from "./components/PrivateRoute"; 
 import { useAuth } from "@/context/AuthContext"; // Opcional si usas para algo aquí o para públicas
 
+
 const queryClient = new QueryClient();
 
 const App = () => {
