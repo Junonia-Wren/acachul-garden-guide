@@ -106,17 +106,17 @@ export const Information = () => {
     {
       step: "Paso 1",
       text: "Descarga la aplicación",
-      image: "/Imagenes/4.jpeg", 
+      image: "/Imagenes/1.png", 
     },
     {
       step: "Paso 2",
       text: "Registra tu planta",
-      image: "/Imagenes/5.jpeg", 
+      image: "/Imagenes/16.jpg", 
     },
     {
       step: "Paso 3",
       text: "Monitorea en tiempo real",
-      image: "/Imagenes/6.jpeg", 
+      image: "/Imagenes/3.png", 
     },
   ];
 
@@ -125,7 +125,7 @@ export const Information = () => {
       <section
         className="relative h-80 bg-cover bg-center flex items-center justify-center"
         style={{
-          backgroundImage: "url('/Imagenes/18.png')",
+          backgroundImage: "url('/Imagenes/4.png')",
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
@@ -218,7 +218,7 @@ export const Information = () => {
                     Tallo fuerte y sin manchas
                 </p>
                 <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
-                    <img src="/Imagenes/2.jpeg" alt="Tallo sano" className="w-full h-full object-cover" />
+                    <img src="/Imagenes/10.png" alt="Tallo sano" className="w-full h-full object-cover" />
                 </div>
             </div>
 
@@ -227,7 +227,7 @@ export const Information = () => {
                     Presencia de flores y frutos
                 </p>
                 <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
-                    <img src="/Imagenes/3.jpeg" alt="Flores y frutos" className="w-full h-full object-cover" />
+                    <img src="/Imagenes/6.png" alt="Flores y frutos" className="w-full h-full object-cover" />
                 </div>
             </div>
         </div>
@@ -324,11 +324,12 @@ export const Information = () => {
         <div className="grid grid-cols-3 gap-1 max-w-4xl mx-auto px-4">
           {[
             "/Imagenes/8.jpeg",
-            "/Imagenes/12.png",
             "/Imagenes/2.jpeg",
             "/Imagenes/15.png",
-            "/Imagenes/5.jpeg",
-            "/Imagenes/14.png",
+            "/Imagenes/9.png",
+            "/Imagenes/17.png",
+            "/Imagenes/8.png",
+            
           ].map((src, i) => (
             <div
               key={i}
@@ -385,7 +386,7 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
           <div>
             <div className="rounded-2xl overflow-hidden shadow-xl">
               <img 
-                src="/Imagenes/4.jpeg"
+                src="/Imagenes/18.png"
                 alt="Acachul en su hábitat natural"
                 className="w-full h-full object-cover"
               />
@@ -408,7 +409,7 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
           <div>
             <div className="rounded-2xl overflow-hidden shadow-xl">
               <img 
-                src="/Imagenes/14.png"
+                src="/Imagenes/24.png"
                 alt="Agricultor usando tecnología para monitorear su cultivo"
                 className="w-full h-full object-cover"
               />

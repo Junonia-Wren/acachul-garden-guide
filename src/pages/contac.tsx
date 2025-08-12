@@ -262,7 +262,7 @@ export const Contac = () => {
           {/* Imagen 1 */}
           <div className="rounded-md overflow-hidden shadow-md">
             <img
-              src="/Imagenes/7.jpeg" // Reemplaza 
+              src="/Imagenes/8.jpeg" // Reemplaza 
               alt="Imagen de galería 1"
               className="w-full h-auto object-cover"
               style={{ aspectRatio: '4 / 3' }}
@@ -288,7 +288,7 @@ export const Contac = () => {
           {/* Imagen 4 */}
           <div className="rounded-md overflow-hidden shadow-md">
             <img
-              src="/Imagenes/10.png" // Reemplaza 
+              src="/Imagenes/1.png" // Reemplaza 
               alt="Imagen de galería 4"
               className="w-full h-auto object-cover"
               style={{ aspectRatio: '4 / 3' }}
