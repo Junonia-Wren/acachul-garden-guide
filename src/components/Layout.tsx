@@ -55,7 +55,7 @@ export const Layout = () => {
                   <Link to="/contac">
                     <Button variant={location.pathname === '/contac' ? 'default' : 'ghost'}>
                       <MessageSquare className="h-4 w-4 mr-2" />
-                      Contac
+                      Contacto
                     </Button>
                   </Link>
 
