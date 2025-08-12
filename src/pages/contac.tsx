@@ -61,6 +61,7 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
     </div>
   );
 };
+
 export const Contac = () => {
     const faqs: FAQItem[] = [
     {
@@ -180,11 +181,11 @@ export const Contac = () => {
                 ></textarea>
               </div>
               <button
-                type="submit"
-                className="w-full py-3 px-6 text-sm font-semibold text-white bg-black hover:bg-gray-800 transition-colors duration-300"
-              >
-                Enviar
-              </button>
+  type="submit"
+  className="w-full py-3 px-6 text-sm font-semibold text-white bg-green-500 hover:bg-green-600 transition-colors duration-300"
+>
+  Enviar
+</button>
             </form>
           </div>
         </div>
