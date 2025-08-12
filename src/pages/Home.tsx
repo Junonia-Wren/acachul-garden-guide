@@ -53,10 +53,10 @@ export const Home = () => {
          
             <div className="max-w-6xl mx-auto px-4 text-center">
 
-    <p className="text-green-700 text-lg mb-2">Bienvenido</p>
-    <h1 className="text-4xl font-bold text-green-900 mb-6">
+    <p className= "text-[#0A7400] text-lg mb-2">Bienvenido</p>
+    <h3 className="text-4xl font-bold text-[#0A7400] mb-6">
       Yol – ná
-    </h1>
+    </h3>
     <p className="text-gray-800 max-w-3xl mx-auto mb-4">
       Yol Ná es un sistema que utiliza sensores ambientales y visión artificial para
       detectar enfermedades en cultivos como el acachul.
@@ -69,10 +69,10 @@ export const Home = () => {
 
   <section className="py-16 bg-gray-50">
   <div className="max-w-6xl mx-auto px-4">
-    <h3 className="text-center text-2xl font-semibold text-[#00461f] mb-2">
+    <h3 className="text-center text-2xl font-semibold text-[#0A7400] mb-2">
       Beneficios de utilizar
     </h3>
-    <p className="text-center text-2xl font-semibold text-[#00461f] mb-8 max-w-3xl mx-auto">
+    <p className="text-center text-2xl font-semibold text-[#0A7400] mb-8 max-w-3xl mx-auto">
       Yol – ná
     </p>
   </div>
