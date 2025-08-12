@@ -264,60 +264,66 @@ export const Information = () => {
 
 
 
-<section id="guia-cuidados" className="py-16 bg-white px-4">
-        <h2 className="text-2xl font-bold mb-10 text-center">
-          Guía básica de cuidados del Acachul
-        </h2>
+<section id="guia-cuidados" className="py-16 bg-gradient-to-b from-green-50 to-white px-4">
+  <div className="max-w-4xl mx-auto text-center mb-12">
+    <h2 className="text-3xl font-bold text-green-800 mb-4">
+      Guía básica de cuidados del Acachul
+    </h2>
+    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+      El acachul es una planta silvestre de gran valor ecológico y cultural. 
+      Con los cuidados adecuados, podrás mantenerla saludable, 
+      floreciente y lista para brindar alimento y refugio a diversas especies.
+    </p>
+  </div>
 
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {/* Paso 1 */}
-          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
-            <img
-              src="/Imagenes/19.png"
-              alt="Riego"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="font-semibold text-lg mb-2">Riego adecuado</h3>
-            <p className="text-gray-700 text-sm">
-              Mantén la tierra húmeda pero no encharcada. Riega moderadamente,
-              especialmente en temporada seca.
-            </p>
-          </div>
+  <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    {/* Paso 1 */}
+    <div className="bg-white border border-green-100 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center">
+      <img src="/Imagenes/19.png" alt="Riego" className="w-20 h-20 mb-4" />
+      <h3 className="font-semibold text-lg text-green-700 mb-2">Riego adecuado</h3>
+      <p className="text-gray-700 text-sm mb-2">
+        Mantén la tierra húmeda pero no encharcada. Riega moderadamente,
+        especialmente en temporada seca.
+      </p>
+      <span className="text-green-600 text-xs italic">
+        Consejo: Revisa la humedad tocando la tierra antes de regar.
+      </span>
+    </div>
 
-          {/* Paso 2 */}
-          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
-            <img
-              src="/Imagenes/9.jpeg"
-              alt="Luz solar"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="font-semibold text-lg mb-2">Luz indirecta</h3>
-            <p className="text-gray-700 text-sm">
-              Coloca el acachul en un lugar con luz indirecta o sombra parcial para
-              evitar que sus hojas se quemen.
-            </p>
-          </div>
+    {/* Paso 2 */}
+    <div className="bg-white border border-green-100 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center">
+      <img src="/Imagenes/9.jpeg" alt="Luz solar" className="w-20 h-20 mb-4" />
+      <h3 className="font-semibold text-lg text-green-700 mb-2">Luz indirecta</h3>
+      <p className="text-gray-700 text-sm mb-2">
+        Coloca el acachul en un lugar con luz indirecta o sombra parcial para
+        evitar que sus hojas se quemen.
+      </p>
+      <span className="text-green-600 text-xs italic">
+        Tip: Evita exposición directa durante el mediodía.
+      </span>
+    </div>
 
-          {/* Paso 3 */}
-          <div className="bg-green-50 rounded-2xl p-6 shadow-md flex flex-col items-center text-center">
-            <img
-              src="/Imagenes/4.jpeg"
-              alt="Sustrato"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="font-semibold text-lg mb-2">Sustrato y fertilización</h3>
-            <p className="text-gray-700 text-sm">
-              Usa un sustrato bien drenado y fertiliza cada 2-3 meses con abono
-              orgánico para promover un buen crecimiento.
-            </p>
-          </div>
-        </div>
-      </section>
+    {/* Paso 3 */}
+    <div className="bg-white border border-green-100 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center">
+      <img src="/Imagenes/4.jpeg" alt="Sustrato" className="w-20 h-20 mb-4" />
+      <h3 className="font-semibold text-lg text-green-700 mb-2">Sustrato y fertilización</h3>
+      <p className="text-gray-700 text-sm mb-2">
+        Usa un sustrato bien drenado y fertiliza cada 2-3 meses con abono
+        orgánico para promover un buen crecimiento.
+      </p>
+      <span className="text-green-600 text-xs italic">
+        Recomendación: Evita fertilizantes químicos muy fuertes.
+      </span>
+    </div>
+  </div>
 
-
-
-
-
+  <div className="mt-12 text-center">
+    <p className="text-sm text-gray-600 italic max-w-lg mx-auto">
+      🌱 Recuerda que cada planta es única. Observa su comportamiento y adapta los cuidados 
+      según el clima y las condiciones de tu entorno.
+    </p>
+  </div>
+</section>
 <section className="py-12 bg-gray-100 text-center">
         <h2 className="text-3xl font-bold mb-10"><span className="text-black">Todo sobre el </span><span className="text-green-600">acachul</span></h2>
 
