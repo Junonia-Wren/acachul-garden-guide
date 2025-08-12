@@ -236,89 +236,88 @@ export const Information = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-{/* --- Sección de Instrucciones de Análisis (Mejorada) --- */}
+{/* --- Sección de Instrucciones en Formato de Tarjetas (Mejorado) --- */}
 <section id="como-tomar-foto" className="py-16 bg-white px-4">
-  <div className="max-w-4xl mx-auto">
+  <div className="max-w-7xl mx-auto">
     <h2 className="text-4xl font-bold text-green-600 mb-4 text-center">Instrucciones para un análisis preciso</h2>
-    <p className="mb-8 text-gray-700 text-lg leading-relaxed text-center">
+    <p className="mb-12 text-gray-700 text-lg leading-relaxed text-center">
       Para obtener un diagnóstico acertado de la salud de tu planta, sigue estos pasos:
     </p>
-    <ul className="space-y-12">
-      <li className="flex items-center space-x-8">
-        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+
+    <div className="flex flex-col md:flex-row justify-center items-stretch space-y-8 md:space-y-0 md:space-x-8">
+      {/* Tarjeta 1 */}
+      <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
+        <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
             src="/Imagenes/f1.png"
-            alt="Paso 1: Dirígete al apartado de análisis"
+            alt="Paso 1: Sube una foto de la planta"
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <p className="text-gray-700 text-lg">Dirígete al apartado de análisis para verificar la salud de tu planta.</p>
-        </div>
-      </li>
-      <li className="flex items-center space-x-8">
-        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+        <h3 className="font-semibold text-xl text-green-500 mb-2">Paso 1</h3>
+        <p className="text-gray-700 text-base">Dirígete al apartado de análisis para verificar la salud de tu planta.</p>
+      </div>
+
+      {/* Tarjeta 2 */}
+      <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
+        <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
             src="/Imagenes/f2.png"
             alt="Paso 2: Toma una fotografía de una hoja"
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <p className="text-gray-700 text-lg">Toma una fotografía enfocando una hoja. (De preferencia coloca una hoja de color blanco debajo para obtener un mejor análisis).</p>
-        </div>
-      </li>
-      <li className="flex items-center space-x-8">
-        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+        <h3 className="font-semibold text-xl text-green-500 mb-2">Paso 2</h3>
+        <p className="text-gray-700 text-base">Toma una fotografía enfocando una hoja. (De preferencia coloca una hoja de color blanco debajo para obtener un mejor análisis).</p>
+      </div>
+
+      {/* Tarjeta 3 */}
+      <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
+        <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
             src="/Imagenes/f3.png"
             alt="Paso 3: Toma los datos de la tierra"
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <p className="text-gray-700 text-lg">Tomar los datos de la tierra requeridos (Ph, Humedad, Luz). Ejemplo, ocupa el sensor 4 en 1.</p>
-        </div>
-      </li>
-      <li className="flex items-center space-x-8">
-        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+        <h3 className="font-semibold text-xl text-green-500 mb-2">Paso 3</h3>
+        <p className="text-gray-700 text-base">Tomar los datos de la tierra requeridos (Ph, Humedad, Luz). Ejemplo, ocupa el sensor 4 en 1.</p>
+      </div>
+      
+      {/* Tarjeta 4 */}
+      <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
+        <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
             src="/Imagenes/f4.png"
             alt="Paso 4: Sube la foto y los datos"
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <p className="text-gray-700 text-lg">En la página, sube la fotografía y coloca en su apartado los datos recabados.</p>
-        </div>
-      </li>
-      <li className="flex items-center space-x-8">
-        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+        <h3 className="font-semibold text-xl text-green-500 mb-2">Paso 4</h3>
+        <p className="text-gray-700 text-base">En la página, sube la fotografía y coloca en su apartado los datos recabados.</p>
+      </div>
+      
+      {/* Tarjeta 5 */}
+      <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
+        <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
             src="/Imagenes/f5.png"
             alt="Paso 5: Observa los resultados del análisis"
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <p className="text-gray-700 text-lg">Una vez rellenados todos los apartados, podrás observar la salud de tu planta.</p>
-        </div>
-      </li>
-    </ul>
+        <h3 className="font-semibold text-xl text-green-500 mb-2">Paso 5</h3>
+        <p className="text-gray-700 text-base">Una vez rellenados todos los apartados, podrás observar la salud de tu planta.</p>
+      </div>
+
+    </div>
   </div>
 </section>
+
+
+
+
+
 
 <section id="guia-cuidados" className="py-16 bg-gradient-to-b from-green-50 to-white px-4">
   <div className="max-w-4xl mx-auto text-center mb-12">
