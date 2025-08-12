@@ -392,11 +392,13 @@ Por ello, en los últimos años se han impulsado proyectos de cultivo controlado
           <div>
             <div className="rounded-2xl overflow-hidden shadow-xl">
               <img 
-                src="/Imagenes/18.png"
+                src="/Imagenes/9.jpeg"
                 alt="Acachul en su hábitat natural"
                 className="w-full h-full object-cover"
               />
+              
             </div>
+            
             <p className="mt-2 text-sm text-gray-500 text-center">
               Acachul en su hábitat natural
             </p>

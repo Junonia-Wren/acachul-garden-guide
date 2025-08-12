@@ -61,7 +61,7 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
     </div>
   );
 };
-export const Contacto = () => {
+export const Contac = () => {
     const faqs: FAQItem[] = [
     {
       pregunta: "¿Quién puede usar Yolná?",
