@@ -2,6 +2,9 @@ import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Leaf, MessageSquare, User, LogOut, SquareKanban} from "lucide-react";
 import { useAuth } from "@/context/AuthContext"; 
+import LogoH from "../assets/LogoH.png";
+import LogoSF from "../assets/LogoSF.png";
+
 
 export const Layout = () => {
   const location = useLocation();
@@ -18,10 +21,11 @@ export const Layout = () => {
       <header className="bg-card shadow-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold text-foreground">Yol ná</span>
-            </Link>
+          <Link to="/" className="flex items-center space-x-2">
+            <img src={LogoH} alt="Logo Yol Ná" className="h-12 w-auto" />
+            {/* Si no quieres texto, elimina el span */}
+          </Link>
+
 
             <nav className="flex items-center space-x-4">
               {user ? (
@@ -112,15 +116,21 @@ export const Layout = () => {
         <Outlet />
       </main>
 
-  <footer className="bg-[#0d4d4d] text-white mt-auto">
+  <footer className="bg-[#164F4E] text-white mt-auto">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
     
     {/* Columna 1: Logo y descripción */}
     <div>
-      <div className="flex items-center mb-4">
-        <Leaf className="h-10 w-10 text-primary mr-2" />
-        <span className="text-2xl font-bold">Yol ná</span>
-      </div>
+<div className="flex items-center mb-4 space-x-4">
+  <img
+    src={LogoSF}
+    alt="Logo Yol Ná Footer"
+    className="h-32 w-auto"
+  />
+  <span className="text-3xl text-white select-none">Yolná</span>
+</div>
+
+
       <p className="text-sm text-gray-300 mb-4">
         Yolná es un espacio para cuidar y aprender sobre el acachul y otras plantas nativas. Cuidemos lo que nace de nuestra tierra.
       </p>
@@ -166,10 +176,10 @@ export const Layout = () => {
       <ul className="space-y-3 text-gray-300 text-sm">
       
         <li className="flex items-center">
-          <i className="fas fa-envelope mr-2 text-primary"></i> violetcruz290@gmail.com
+          <i className="fas fa-envelope mr-2 text-primary"></i> yolna.proyecto@gmail.com
         </li>
         <li className="flex items-center">
-          <i className="fas fa-map-marker-alt mr-2 text-primary"></i> Av. Universidad #1000, Col. Tierra. 
+          <i className="fas fa-map-marker-alt mr-2 text-primary"></i> Xicotepec de Juárez, Puebla. 
         </li>
       </ul>
       <form className="mt-4 flex">
@@ -186,7 +196,7 @@ export const Layout = () => {
   </div>
 
   {/* Línea inferior */}
-  <div className="bg-[#062828] text-center py-4 text-sm text-gray-400">
+  <div className="bg-[#000000] text-center py-4 text-sm text-gray-400">
     &copy; 2024 Yol Ná. Todos los derechos reservados. 
     <Link to="/privacy" className="text-primary hover:underline ml-2">Aviso de Privacidad</Link>
   </div>
