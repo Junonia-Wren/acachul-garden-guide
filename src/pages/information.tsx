@@ -275,7 +275,7 @@ export const Information = () => {
       <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
         <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
-            src="/Imagenes/f3.png"
+            src="/Imagenes/f4.png"
             alt="Paso 3: Toma los datos de la tierra"
             className="w-full h-full object-cover"
           />
@@ -288,7 +288,7 @@ export const Information = () => {
       <div className="flex-1 max-w-sm bg-gray-100 rounded-lg shadow-lg p-4 flex flex-col items-center text-center">
         <div className="w-full h-48 overflow-hidden rounded-md mb-4">
           <img
-            src="/Imagenes/f4.png"
+            src="/Imagenes/f3.png"
             alt="Paso 4: Sube la foto y los datos"
             className="w-full h-full object-cover"
           />
