@@ -256,56 +256,52 @@ export const Contac = () => {
         </div>
       </section>
 
- {/* Sección de la galería */}
-      <section className="py-12 bg-gray-100 text-center">
-        <h2 className="text-xl font-bold mb-8">Galería</h2>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
-          {/* Imagen 1 */}
-          <div className="rounded-md overflow-hidden shadow-md">
-            <img
-              src="/Imagenes/8.jpeg" // Reemplaza 
-              alt="Imagen de galería 1"
-              className="w-full h-auto object-cover"
-              style={{ aspectRatio: '4 / 3' }}
-            />
-          </div>
-          {/* Imagen 2 */}
-          <div className="rounded-md overflow-hidden shadow-md">
-            <img
-              src="/Imagenes/2.jpeg" // Reemplaza 
-              alt="Imagen de galería 2"
-              className="w-full h-auto object-cover"
-              style={{ aspectRatio: '4 / 3' }}
-            />
-          </div>
-          {/* Imagen 3 */}
-          <div className="rounded-md overflow-hidden shadow-md md:row-span-2">
-            <img
-              src="/Imagenes/20.jpeg" // Reemplaza 
-              alt="Imagen de galería 3"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          {/* Imagen 4 */}
-          <div className="rounded-md overflow-hidden shadow-md">
-            <img
-              src="/Imagenes/1.png" // Reemplaza 
-              alt="Imagen de galería 4"
-              className="w-full h-auto object-cover"
-              style={{ aspectRatio: '4 / 3' }}
-            />
-          </div>
-          {/* Imagen 5 */}
-          <div className="rounded-md overflow-hidden shadow-md">
-            <img
-              src="/Imagenes/14.png" // Reemplaza 
-              alt="Imagen de galería 5"
-              className="w-full h-auto object-cover"
-              style={{ aspectRatio: '4 / 3' }}
-            />
-          </div>
-        </div>
-      </section>
+{/* Sección de la galería */}
+<section className="py-12 bg-gray-100 text-center">
+  <h2 className="text-xl font-bold mb-8">Galería</h2>
+  <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+    {/* Imagen 1 */}
+    <div className="rounded-md overflow-hidden shadow-md">
+      <img
+        src="/Imagenes/8.jpeg"
+        alt="Imagen de galería 1"
+        className="w-full h-64 object-cover"
+      />
+    </div>
+    {/* Imagen 2 */}
+    <div className="rounded-md overflow-hidden shadow-md">
+      <img
+        src="/Imagenes/2.jpeg"
+        alt="Imagen de galería 2"
+        className="w-full h-64 object-cover"
+      />
+    </div>
+    {/* Imagen 3 (más alta en pantallas grandes) */}
+    <div className="rounded-md overflow-hidden shadow-md md:row-span-2">
+      <img
+        src="/Imagenes/20.jpeg"
+        alt="Imagen de galería 3"
+        className="w-full h-full md:h-[532px] object-cover"
+      />
+    </div>
+    {/* Imagen 4 */}
+    <div className="rounded-md overflow-hidden shadow-md">
+      <img
+        src="/Imagenes/1.png"
+        alt="Imagen de galería 4"
+        className="w-full h-64 object-cover"
+      />
+    </div>
+    {/* Imagen 5 */}
+    <div className="rounded-md overflow-hidden shadow-md">
+      <img
+        src="/Imagenes/14.png"
+        alt="Imagen de galería 5"
+        className="w-full h-64 object-cover"
+      />
+    </div>
+  </div>
+</section>
 
 
 {/* Aquí insertamos el acordeón FAQ */}
