@@ -66,6 +66,35 @@ export const Layout = () => {
                 </>
               ) : (
                 <>
+
+                <Link to="/dashboard">
+                    <Button variant={location.pathname === '/dashboard' ? 'default' : 'ghost'}>
+                      <SquareKanban className="h-4 w-4 mr-2" />
+                      Panel Principal
+                    </Button>
+                  </Link>
+
+                  <Link to="/chatbot">
+                    <Button variant={location.pathname === '/chatbot' ? 'default' : 'ghost'}>
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Asistente
+                    </Button>
+                  </Link>
+
+                   <Link to="/info">
+                    <Button variant={location.pathname === '/info' ? 'default' : 'ghost'}>
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Información
+                    </Button>
+                  </Link>
+
+                  <Link to="/contac">
+                    <Button variant={location.pathname === '/contac' ? 'default' : 'ghost'}>
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Contacto
+                    </Button>
+                  </Link>
+                  
                   <Link to="/login">
                     <Button variant="ghost">Iniciar Sesión</Button>
                   </Link>
