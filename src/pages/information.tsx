@@ -235,34 +235,90 @@ export const Information = () => {
 
 
 
-      {/* --- Seccion con formato  para tomar fotos --- */}
-      <section id="como-tomar-foto" className="py-16 bg-white px-4">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="text-gray-700 text-lg leading-relaxed text-justify md:order-2">
-            <h2 className="text-4xl font-bold text-green-600 mb-4">Toma fotos claras y efectivas</h2>
-            <p className="mb-4">
-              Para un diagnóstico acertado, asegúrate de que la foto tenga buena iluminación, enfoque la planta completa y evita que haya objetos que la tapen.
-            </p>
-            <p>
-              ¡Así Yolná podrá darte recomendaciones precisas para cuidar mejor tus plantas!
-            </p>
-          </div>
-          <div className="md:order-1">
-            <div className="rounded-2xl overflow-hidden shadow-xl">
-              <img 
-                src="/Imagenes/16.jpg"
-                alt="Persona tomando una foto de una planta"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p className="mt-2 text-sm text-gray-500 text-center">
-              Ejemplo de cómo tomar una foto para el diagnóstico.
-            </p>
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* --- Sección de Instrucciones de Análisis (Mejorada) --- */}
+<section id="como-tomar-foto" className="py-16 bg-white px-4">
+  <div className="max-w-4xl mx-auto">
+    <h2 className="text-4xl font-bold text-green-600 mb-4 text-center">Instrucciones para un análisis preciso</h2>
+    <p className="mb-8 text-gray-700 text-lg leading-relaxed text-center">
+      Para obtener un diagnóstico acertado de la salud de tu planta, sigue estos pasos:
+    </p>
+    <ul className="space-y-12">
+      <li className="flex items-center space-x-8">
+        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+          <img
+            src="/Imagenes/f1.png"
+            alt="Paso 1: Dirígete al apartado de análisis"
+            className="w-full h-full object-cover"
+          />
         </div>
-      </section>
-
-
+        <div>
+          <p className="text-gray-700 text-lg">Dirígete al apartado de análisis para verificar la salud de tu planta.</p>
+        </div>
+      </li>
+      <li className="flex items-center space-x-8">
+        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+          <img
+            src="/Imagenes/f2.png"
+            alt="Paso 2: Toma una fotografía de una hoja"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <p className="text-gray-700 text-lg">Toma una fotografía enfocando una hoja. (De preferencia coloca una hoja de color blanco debajo para obtener un mejor análisis).</p>
+        </div>
+      </li>
+      <li className="flex items-center space-x-8">
+        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+          <img
+            src="/Imagenes/f3.png"
+            alt="Paso 3: Toma los datos de la tierra"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <p className="text-gray-700 text-lg">Tomar los datos de la tierra requeridos (Ph, Humedad, Luz). Ejemplo, ocupa el sensor 4 en 1.</p>
+        </div>
+      </li>
+      <li className="flex items-center space-x-8">
+        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+          <img
+            src="/Imagenes/f4.png"
+            alt="Paso 4: Sube la foto y los datos"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <p className="text-gray-700 text-lg">En la página, sube la fotografía y coloca en su apartado los datos recabados.</p>
+        </div>
+      </li>
+      <li className="flex items-center space-x-8">
+        <div className="w-28 h-28 flex-shrink-0 overflow-hidden shadow-md">
+          <img
+            src="/Imagenes/f5.png"
+            alt="Paso 5: Observa los resultados del análisis"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <p className="text-gray-700 text-lg">Una vez rellenados todos los apartados, podrás observar la salud de tu planta.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
 
 <section id="guia-cuidados" className="py-16 bg-gradient-to-b from-green-50 to-white px-4">
   <div className="max-w-4xl mx-auto text-center mb-12">
