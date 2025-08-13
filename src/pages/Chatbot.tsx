@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import * as tf from "@tensorflow/tfjs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,18 +16,67 @@ interface Message {
 
 export const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: '¡Hola, Soy Yol ná ! ¿En qué puedo ayudarte hoy?',
-      sender: 'bot',
-      timestamp: new Date()
-    }
+    { id: '1', text: '¡Hola, Soy Yol ná! ¿En qué puedo ayudarte hoy?', sender: 'bot', timestamp: new Date() }
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [awaitingSymptom, setAwaitingSymptom] = useState(false);
+  const modelRef = useRef<tf.LayersModel | null>(null);
 
-  const handleSendMessage = () => {
+
+
+const quickResponses: Record<string, string> = {
+  "¿Cada cuánto debo regar mi Acachul?": "El Acachul necesita riego moderado. Verifica que el suelo esté húmedo pero no encharcado.",
+  "Mi planta tiene hojas amarillas, ¿qué hago?": "Las hojas amarillas pueden indicar exceso de agua, falta de nutrientes o poca luz.",
+  "¿Qué fertilizante recomiendan?": "Fertiliza cada 2-3 semanas en primavera y verano.",
+  "¿Cómo detectar plagas en las hojas?": "Revisa el envés de las hojas, podrías encontrar áfidos o araña roja."
+};
+
+
+
+  // Cargar modelo al iniciar
+  useEffect(() => {
+    const loadModel = async () => {
+      modelRef.current = await tf.loadLayersModel("/modelo_hojas_js/model.json");
+      console.log("Modelo cargado");
+    };
+    loadModel();
+  }, []);
+
+  // Manejar carga de imagen
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setSelectedImage(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const analyzeImage = async (imageData: string) => {
+    if (!modelRef.current) return "El modelo aún no está listo.";
+    
+    return new Promise<string>((resolve) => {
+      const img = new Image();
+      img.src = imageData;
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const tensor = tf.browser.fromPixels(img)
+          .resizeNearestNeighbor([150, 150])
+          .toFloat()
+          .div(tf.scalar(255))
+          .expandDims();
+        const prediction = modelRef.current!.predict(tensor) as tf.Tensor;
+        const data = prediction.dataSync();
+        const prob = data[0];
+        const label = prob > 0.5 ? "Dañada" : "Saludable";
+        resolve(label);
+      };
+    });
+  };
+
+  const handleSendMessage = async () => {
     if (!inputMessage.trim() && !selectedImage) return;
 
     const userMessage: Message = {
@@ -42,10 +92,37 @@ export const Chatbot = () => {
     setSelectedImage(null);
     setIsTyping(true);
 
+    // Respuesta del bot
+    let botText = "";
+
+    if (selectedImage) {
+      const result = await analyzeImage(selectedImage);
+      if (result === "Saludable") {
+        botText = "Tu hoja parece saludable. Continúa con riego moderado, luz indirecta y fertilización cada 2-3 semanas.";
+      } else {
+        botText = "Tu hoja parece dañada. ¿Presenta síntomas como manchas amarillas, blancas o partes rotas?";
+        setAwaitingSymptom(true);
+      }
+    } else if (awaitingSymptom) {
+      const input = inputMessage.toLowerCase();
+      if (input.includes("amarill")) {
+        botText = "Manchas amarillas: reduce riego, aumenta luz indirecta y revisa fertilización.";
+      } else if (input.includes("blanc")) {
+        botText = "Manchas blancas: puede ser hongos, evita humedad excesiva y aplica fungicida si es necesario.";
+      } else if (input.includes("partes rotas") || input.includes("roto")) {
+        botText = "Partes rotas: recorta cuidadosamente las hojas dañadas y evita manipular mucho la planta.";
+      } else {
+        botText = "Gracias por la información. Asegúrate de cuidar tu planta según los síntomas observados.";
+      }
+      setAwaitingSymptom(false);
+    } else {
+      botText = getBotResponse(inputMessage);
+    }
+
     setTimeout(() => {
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: getBotResponse(inputMessage),
+        text: botText,
         sender: 'bot',
         timestamp: new Date()
       };
@@ -56,7 +133,6 @@ export const Chatbot = () => {
 
   const getBotResponse = (userInput: string): string => {
     const input = userInput.toLowerCase();
-
     if (input.includes('agua') || input.includes('riego')) {
       return 'El Acachul necesita riego moderado. Verifica que el suelo esté húmedo pero no encharcado.';
     }
@@ -73,17 +149,6 @@ export const Chatbot = () => {
       return 'Fertiliza cada 2-3 semanas en primavera y verano.';
     }
     return 'Podrías darme más detalles para ayudarte mejor.';
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   const quickQuestions = [
@@ -107,7 +172,7 @@ export const Chatbot = () => {
           </p>
         </div>
 
-        {/* Instrucciones en Cards horizontales */}
+        {/* Instrucciones */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <Card className="flex-1">
             <CardContent className="p-3 flex items-center gap-3">
@@ -131,57 +196,29 @@ export const Chatbot = () => {
 
         {/* Chat */}
         <div className="grid lg:grid-cols-4 gap-6">
-          {/* Chat principal */}
           <Card className="lg:col-span-3">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Bot className="h-5 w-5 mr-2" />
-                Yol Ná
+                <Bot className="h-5 w-5 mr-2" /> Yol Ná
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <ScrollArea className="h-[26rem] p-4">
                 <div className="space-y-4">
                   {messages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`flex items-start space-x-2 max-w-xs lg:max-w-md ${message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
-                      >
-                        <div
-                          className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            message.sender === 'user'
-                              ? 'bg-primary text-primary-foreground'
-                              : 'bg-accent text-accent-foreground'
-                          }`}
-                        >
+                    <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`flex items-start space-x-2 max-w-xs lg:max-w-md ${message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${message.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-accent text-accent-foreground'}`}>
                           {message.sender === 'user' ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
                         </div>
-                        <div
-                          className={`rounded-lg p-3 ${
-                            message.sender === 'user'
-                              ? 'bg-primary text-primary-foreground'
-                              : 'bg-muted'
-                          }`}
-                        >
-                          {message.image && (
-                            <img
-                              src={message.image}
-                              alt="Adjunto"
-                              className="max-w-[120px] rounded mb-2"
-                            />
-                          )}
+                        <div className={`rounded-lg p-3 ${message.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                          {message.image && <img src={message.image} alt="Adjunto" className="max-w-[120px] rounded mb-2" />}
                           <p className="text-sm">{message.text}</p>
-                          <p className="text-xs opacity-70 mt-1">
-                            {message.timestamp.toLocaleTimeString()}
-                          </p>
+                          <p className="text-xs opacity-70 mt-1">{message.timestamp.toLocaleTimeString()}</p>
                         </div>
                       </div>
                     </div>
                   ))}
-
                   {isTyping && (
                     <div className="flex justify-start">
                       <div className="flex items-center space-x-2">
@@ -203,14 +240,10 @@ export const Chatbot = () => {
 
               {/* Barra de entrada */}
               <div className="p-4 border-t flex space-x-2 items-center">
+                {selectedImage && <img src={selectedImage} alt="preview" className="h-16 w-16 rounded mr-2" />}
                 <label className="cursor-pointer">
                   <ImagePlus className="h-6 w-6 text-muted-foreground" />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                  />
+                  <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                 </label>
                 <Input
                   value={inputMessage}
@@ -228,25 +261,21 @@ export const Chatbot = () => {
 
           {/* Panel lateral */}
           <div className="space-y-6">
-            {/* Preguntas rápidas */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center text-sm">
-                  <Lightbulb className="h-4 w-4 mr-2" />
-                  Preguntas Rápidas
+                  <Lightbulb className="h-4 w-4 mr-2" /> Preguntas Rápidas
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-3">
                 <div className="space-y-2">
-                  {quickQuestions.map((question, index) => (
-                    <Button
-                      key={index}
-                      variant="ghost"
-                      size="sm"
-                      className="w-full text-left text-xs h-auto p-2 justify-start whitespace-normal"
-                      onClick={() => setInputMessage(question)}
-                    >
-                      {question}
+                  {quickQuestions.map((q, i) => (
+                    <Button key={i} variant="ghost" size="sm" className="w-full text-left text-xs h-auto p-2 justify-start whitespace-normal" onClick={() => {
+   setInputMessage(q); // opcional, puedes eliminar si no quieres que se vea en la barra
+   handleSendMessage(); // envía automáticamente la pregunta al chat
+}}
+ >
+                      {q}
                     </Button>
                   ))}
                 </div>
