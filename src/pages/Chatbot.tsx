@@ -269,15 +269,34 @@ const quickResponses: Record<string, string> = {
               </CardHeader>
               <CardContent className="p-3">
                 <div className="space-y-2">
-                  {quickQuestions.map((q, i) => (
-                    <Button key={i} variant="ghost" size="sm" className="w-full text-left text-xs h-auto p-2 justify-start whitespace-normal" onClick={() => {
-   setInputMessage(q); // opcional, puedes eliminar si no quieres que se vea en la barra
-   handleSendMessage(); // envía automáticamente la pregunta al chat
-}}
- >
-                      {q}
-                    </Button>
-                  ))}
+                 {quickQuestions.map((q, i) => (
+  <Button
+    key={i}
+    variant="ghost"
+    size="sm"
+    className="w-full text-left text-xs h-auto p-2 justify-start whitespace-normal"
+    onClick={() => {
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        text: q,
+        sender: 'user',
+        timestamp: new Date(),
+      };
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: quickResponses[q],
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, userMessage, botMessage]);
+    }}
+  >
+    {q}
+  </Button>
+))}
+
+
+
                 </div>
               </CardContent>
             </Card>
