@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,7 +6,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import { Upload, Camera, BarChart3, BookOpen, Lightbulb, Heart} from "lucide-react";
-import { calculateHealthIndex, interpretPh, interpretHumidity, interpretLight, generateRecommendations} from "../lib/usePlantAnalysis";
+
+import {
+  calculateHealthIndex,
+  interpretPh,
+  interpretHumidity,
+  interpretLight,
+  generateRecommendations,
+  usePlantAnalysis,
+  RecommendationCard
+} from "../lib/usePlantAnalysis";
 
 import { Tabs as InnerTabs, TabsList as InnerTabsList, TabsTrigger as InnerTabsTrigger, TabsContent as InnerTabsContent } from "@/components/ui/tabs";
 import CurrentWeatherPanel from "@/lib/weather/components/CurrentWeatherPanel";
@@ -26,12 +35,41 @@ export const Dashboard = () => {
   });
 
   const [healthIndex, setHealthIndex] = useState<number | null>(null);
-  const [recommendations, setRecommendations] = useState<string[]>([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [tabValue, setTabValue] = useState("analysis");
 
+  // --- Parsear valores numéricos ---
+  const phValue = parseFloat(plantData.ph || "0");
+  const humidityValue = parseFloat(plantData.humidity || "0");
+  const lightValue = parseFloat(plantData.light || "0");
 
+  // --- Hook de recomendaciones avanzadas ---
+  const { recommendations: weatherRecs } = usePlantAnalysis(
+    { ph: phValue, soilMoisture: humidityValue, lux: lightValue },
+    19.43, // lat ejemplo
+    -99.13 // lon ejemplo
+  );
 
+  // --- Recomendaciones simples ---
+  const simpleRecs: RecommendationCard[] = useMemo(() => {
+    return generateRecommendations(phValue, humidityValue, lightValue).map((tip, i) => ({
+      id: `simple-${i}`,
+      title: tip,
+      category: "Manejo" as const,
+      severity: "info" as const,
+      summary: tip,
+      details: tip,
+      actions: [],
+    }));
+  }, [phValue, humidityValue, lightValue]);
+
+  // --- Combinar ambas ---
+  const combinedRecs = useMemo(() => {
+    if (!hasSubmitted) return [];
+    return [...simpleRecs, ...weatherRecs];
+  }, [hasSubmitted, simpleRecs, weatherRecs]);
+
+  // --- Handlers ---
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -39,21 +77,15 @@ export const Dashboard = () => {
     }
   };
 
- const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const ph = parseFloat(plantData.ph);
-    const humidity = parseFloat(plantData.humidity);
-    const light = parseFloat(plantData.light);
-
-    if (!isNaN(ph) && !isNaN(humidity) && !isNaN(light)) {
-      const score = calculateHealthIndex({ ph, humidity, light });
+    if (!isNaN(phValue) && !isNaN(humidityValue) && !isNaN(lightValue)) {
+      const score = calculateHealthIndex({ ph: phValue, humidity: humidityValue, light: lightValue });
       setHealthIndex(score);
-      setRecommendations(generateRecommendations(ph, humidity, light));
       setHasSubmitted(true);
       setTabValue("results");
     }
   };
-
 
   return (
     <div className="min-h-screen bg-background">
@@ -72,8 +104,10 @@ export const Dashboard = () => {
             <TabsTrigger value="catalog">Catálogo</TabsTrigger>
           </TabsList>
 
+          {/* --------- ANÁLISIS --------- */}
           <TabsContent value="analysis" className="space-y-6">
             <div className="grid lg:grid-cols-2 gap-6">
+              {/* Datos de la planta */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -98,9 +132,7 @@ export const Dashboard = () => {
                             <span className="text-primary hover:underline">
                               Haz clic para subir una imagen
                             </span>
-                            <p className="text-sm text-muted-foreground mt-1">
-                              PNG, JPG hasta 10MB
-                            </p>
+                            <p className="text-sm text-muted-foreground mt-1">PNG, JPG hasta 10MB</p>
                           </Label>
                         </div>
                         {plantData.image && (
@@ -136,9 +168,7 @@ export const Dashboard = () => {
                           max="14"
                           placeholder="6.5"
                           value={plantData.ph}
-                          onChange={(e) =>
-                            setPlantData((prev) => ({ ...prev, ph: e.target.value }))
-                          }
+                          onChange={(e) => setPlantData((prev) => ({ ...prev, ph: e.target.value }))}
                           className="mt-1"
                         />
                       </div>
@@ -152,9 +182,7 @@ export const Dashboard = () => {
                           max="100"
                           placeholder="65"
                           value={plantData.humidity}
-                          onChange={(e) =>
-                            setPlantData((prev) => ({ ...prev, humidity: e.target.value }))
-                          }
+                          onChange={(e) => setPlantData((prev) => ({ ...prev, humidity: e.target.value }))}
                           className="mt-1"
                         />
                       </div>
@@ -167,21 +195,18 @@ export const Dashboard = () => {
                           min="0"
                           placeholder="12000"
                           value={plantData.light}
-                          onChange={(e) =>
-                            setPlantData((prev) => ({ ...prev, light: e.target.value }))
-                          }
+                          onChange={(e) => setPlantData((prev) => ({ ...prev, light: e.target.value }))}
                           className="mt-1"
                         />
                       </div>
                     </div>
 
-                    <Button type="submit" className="w-full">
-                      Analizar Planta
-                    </Button>
+                    <Button type="submit" className="w-full">Analizar Planta</Button>
                   </form>
                 </CardContent>
               </Card>
 
+              {/* Resumen de Datos */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -193,34 +218,17 @@ export const Dashboard = () => {
                     <div className="p-4 bg-muted rounded-lg">
                       <h4 className="font-medium mb-2">Estado de Sensores</h4>
                       <div className="grid grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <p className="text-muted-foreground">pH</p>
-                          <p className="font-medium">{plantData.ph || "--"}</p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Humedad</p>
-                          <p className="font-medium">
-                            {plantData.humidity ? `${plantData.humidity}%` : "--"}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Luz</p>
-                          <p className="font-medium">
-                            {plantData.light ? `${plantData.light} lux` : "--"}
-                          </p>
-                        </div>
+                        <div><p className="text-muted-foreground">pH</p><p className="font-medium">{plantData.ph || "--"}</p></div>
+                        <div><p className="text-muted-foreground">Humedad</p><p className="font-medium">{plantData.humidity ? `${plantData.humidity}%` : "--"}</p></div>
+                        <div><p className="text-muted-foreground">Luz</p><p className="font-medium">{plantData.light ? `${plantData.light} lux` : "--"}</p></div>
                       </div>
                     </div>
-
                     <div className="p-4 bg-primary-light rounded-lg">
                       <h4 className="font-medium mb-2">Estado de la Imagen</h4>
                       <p className="text-sm text-muted-foreground">
-                        {plantData.image
-                          ? "✅ Imagen cargada correctamente"
-                          : "⏳ Esperando imagen de la planta"}
+                        {plantData.image ? "✅ Imagen cargada correctamente" : "⏳ Esperando imagen de la planta"}
                       </p>
                     </div>
-
                     <div className="p-4 bg-accent/10 rounded-lg">
                       <h4 className="font-medium mb-2">Descripción</h4>
                       <p className="text-sm text-muted-foreground">
@@ -233,6 +241,7 @@ export const Dashboard = () => {
             </div>
           </TabsContent>
 
+          {/* --------- RESULTADOS --------- */}
           <TabsContent value="results" className="space-y-6">
             {!hasSubmitted ? (
               <Card>
@@ -247,7 +256,7 @@ export const Dashboard = () => {
                     <BarChart3 className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
                     <h3 className="text-lg font-medium mb-2">No hay resultados disponibles</h3>
                     <p className="text-muted-foreground">
-                      Primero analiza una planta en la pestaña "Análisis" para ver los resultados aquí
+                      Primero analiza una planta en la pestaña "Análisis"
                     </p>
                   </div>
                 </CardContent>
@@ -255,31 +264,25 @@ export const Dashboard = () => {
             ) : (
               <>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <Card className="col-span-1 lg:col-span-1">
-                    <CardHeader>
-                      <CardTitle>Índice de Salud</CardTitle>
-                    </CardHeader>
+                  {/* Índice de Salud */}
+                  <Card className="col-span-1">
+                    <CardHeader><CardTitle>Índice de Salud</CardTitle></CardHeader>
                     <CardContent className="text-center space-y-2">
-
                       <div className="flex items-center justify-center gap-3 text-5xl font-bold text-primary">
                         <div className="relative w-10 h-10">
                           <Heart className="w-10 h-10 text-muted-foreground" />
                           <Heart
                             className="w-10 h-10 text-bg-primary-light absolute top-0 left-0 transition-all duration-700 ease-in-out"
-                            style={{
-                              clipPath: `inset(${100 - (healthIndex ?? 0)}% 0 0 0)`
-                            }}
+                            style={{ clipPath: `inset(${100 - (healthIndex ?? 0)}% 0 0 0)` }}
                           />
                         </div>
                         <span>{healthIndex !== null ? `${healthIndex}%` : "--"}</span>
                       </div>
-
-                      <p className="text-sm text-muted-foreground">
-                        Basado en comparación con valores óptimos
-                      </p>
+                      <p className="text-sm text-muted-foreground">Basado en comparación con valores óptimos</p>
                     </CardContent>
                   </Card>
 
+                  {/* Interpretaciones */}
                   <Card className="bg-primary-light">
                     <CardHeader>
                       <CardTitle>pH del Suelo: <a className="text-muted-foreground font-medium">{plantData.ph || "--"}</a></CardTitle>
@@ -288,9 +291,7 @@ export const Dashboard = () => {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <p className="text-muted-foreground">Descripción</p>
-                          <p className="text-xl font-semibold">
-                            {plantData.ph ? interpretPh(parseFloat(plantData.ph)) : "No especificado"}
-                          </p>
+                          <p className="text-xl font-semibold">{plantData.ph ? interpretPh(phValue) : "No especificado"}</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">pH óptimo</p>
@@ -308,9 +309,7 @@ export const Dashboard = () => {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <p className="text-muted-foreground">Descripción</p>
-                          <p className="text-xl font-semibold">
-                           {plantData.humidity ? interpretHumidity(parseFloat(plantData.humidity)) : "No especificado"}
-                          </p>
+                          <p className="text-xl font-semibold">{plantData.humidity ? interpretHumidity(humidityValue) : "No especificado"}</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">% óptimo</p>
@@ -328,52 +327,43 @@ export const Dashboard = () => {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <p className="text-muted-foreground">Descripción</p>
-                          <p className="text-xl font-semibold">
-                            {plantData.light ? interpretLight(parseFloat(plantData.light)) : "No especificado"}
-                          </p>
+                          <p className="text-xl font-semibold">{plantData.light ? interpretLight(lightValue) : "No especificado"}</p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">lux óptimo</p>
-                          <p className="font-medium">10,000 – 25,000 lux (semisombra o sol filtrado)</p>
+                          <p className="font-medium">10,000 – 25,000 lux</p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
+                  {/* Diagnóstico */}
                   <Card className="col-span-1 lg:col-span-2">
-                    <CardHeader>
-                      <CardTitle>Diagnóstico de Enfermedad</CardTitle>
-                    </CardHeader>
+                    <CardHeader><CardTitle>Diagnóstico de Enfermedad</CardTitle></CardHeader>
                     <CardContent>
                       <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <p className="font-medium text-muted-foreground">Nombre</p>
-                          <p className="text-lg">Ninguna detectada</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-muted-foreground">Síntomas</p>
-                          <p className="text-sm">No se observaron patrones anómalos</p>
-                        </div>
-                        <div className="col-span-2">
-                          <p className="font-medium text-muted-foreground">
-                            Tratamiento sugerido
-                          </p>
-                          <p className="text-sm">Ninguno necesario en este momento</p>
-                        </div>
+                        <div><p className="font-medium text-muted-foreground">Nombre</p><p className="text-lg">Ninguna detectada</p></div>
+                        <div><p className="font-medium text-muted-foreground">Síntomas</p><p className="text-sm">No se observaron patrones anómalos</p></div>
+                        <div className="col-span-2"><p className="font-medium text-muted-foreground">Tratamiento sugerido</p><p className="text-sm">Ninguno necesario en este momento</p></div>
                       </div>
                     </CardContent>
                   </Card>
 
+                  {/* Recomendaciones Detalladas */}
                   <Card className="col-span-1 lg:col-span-3">
-                    <CardHeader>
-                      <CardTitle>Recomendaciones Generales</CardTitle>
-                    </CardHeader>
+                    <CardHeader><CardTitle>Recomendaciones Generales</CardTitle></CardHeader>
                     <CardContent>
-                      <ul className="list-disc list-inside text-muted-foreground space-y-1">
-                        {recommendations.map((rec, index) => (
-                          <li key={index}>{rec}</li>
-                        ))}
-                      </ul>
+                      {combinedRecs.length ? (
+                        <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                          {combinedRecs.map((rec) => (
+                            <li key={rec.id}>
+                              <strong>{rec.title}</strong>: {rec.details}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>No se encontraron recomendaciones.</p>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
